@@ -2,22 +2,24 @@
 
 ### Installation
   
-    Assume that you have docker installed.
+    Assume that you have docker, docker-compose up and npm installed.
 
     In order to run the application in local environment follow instructions below:
 
   ```bash
   # clone
   git clone https://github.com/r-aliev/squadro-project.git
-  cd squadro-project
   
-  sudo docker build . 
+  ## For front end
+  cd squadro-project/frontend
+  docker-compose up --build
   
-  sudo docker-compose up  
+  ## For back end
+  cd squadro-project/backend
+  docker-compose up --build
 
   ```
 
-    Check 127.0.0.1 for frontend.
+    Check 127.0.0.1:3000 for frontend.
     Check 127.0.0.1:8000/api/ for api.
   
-    (Do a research why we need to use docker with sudo (i think related to nginx))

@@ -1,5 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
 import './App.css';
 
 class App extends React.Component {
@@ -8,24 +7,24 @@ class App extends React.Component {
     this.fetchTasks()
   }
 
-fetchTasks(){
-  console.log("Fetching...")
+  fetchTasks(){
+    console.log("Fetching...")
 
-  fetch('http://127.0.0.1/api/')
-  .then(response => response.json())
-  .then(data =>
-    console.log("Data:", data)
-    )
-}
+    fetch('http://127.0.0.1:8000/api/')
+    .then(response => response.json())
+    .then(data =>
+      console.log("Data:", data)
+      )
+  }
 
-  render(){
-
+  render() {
     return(
-      <div className="container">
-             
+      <div>
+        <h1>Chess Boaccrd blyer!</h1>
       </div>
     )
   }
+
 }
 
 export default App;

@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  db:
+    container_name: postgres_db
+    image: postgres:13-alpine
+    restart: always
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./squadro_volume:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+  app:
+    container_name: backend_container
+    command: python manage.py runserver 0.0.0.0:8000
+    build:
+      context: .
+    volumes:
+      - .:/backend
+    ports:
+      - 8000:8000
+    depends_on:
+      - db 
+
+volumes:
+  squadro_volume:
