@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import Board from "./components/Board/Board"
 
 class App extends React.Component {
 
@@ -19,8 +20,8 @@ class App extends React.Component {
 
   render() {
     return(
-      <div>
-        <h1>Chess Boaccrd blyer!</h1>
+      <div id="app">
+        <Board />
       </div>
     )
   }

@@ -1,0 +1,10 @@
+#board {
+  display: grid;
+  grid-template-columns: 88px repeat(5, auto) 88px;
+  grid-template-rows: 88px repeat(5, auto) 88px;
+  width: 576px;
+  height: 576px;
+  background-image: url("../../assets/images/black_board.png");
+  background-repeat: no-repeat, repeat;
+  background-size: 100%;
+}

@@ -11,6 +11,7 @@
   git clone https://github.com/r-aliev/squadro-project.git
   
   ## For front end
+  npm install
   cd squadro-project/frontend
   docker-compose up --build
   
