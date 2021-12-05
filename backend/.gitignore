@@ -1,3 +1,7 @@
 venv
 
-backend/squadro_volume
+api/__pycache__
+
+core/__pycache__
+
+squadro_volume
