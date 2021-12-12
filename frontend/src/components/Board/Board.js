@@ -1,45 +1,90 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './Board.css';
 import Tile from '../Tile/Tile'
+import {
+  initialBoardState,
+} from "../../Constants";
+
+
+const xAxis = ['1', '2', '3', '4', '5', '6', '7']; // columns
+const yAxis = ['1', '2', '3', '4', '5', '6', '7']; // rows
+
+const yLeftAndXtopValues = ['1', '3', '2', '3', '1'];
+const yRightAndXbottomValues = ['3', '1', '2', '1', '3'];
+
+const samePosition = (p1, p2) => {
+  return p1.x === p2.x && p1.y === p2.y;
+}
+
 
 const Board = () => {
-  let redPiece=0;
-  let greenPiece=1;
+  const [pieces, setPieces] = useState(initialBoardState);
 
-  let i;
+  let board = [];
+
+
   const handleClick = (e) => {
-    const element = e.target;
+    const pieceElement = e.target;
+    const element = e.currentTarget;
+    console.log(pieceElement);
+    console.log(element);
+    let row = element.dataset.coordinates[0];
+    let column = element.dataset.coordinates[1];
+    console.log("row: " + row + " column:" + column);
+    let newPieces = [];
 
-    let i = 1;
-    //let s = 1 + parseInt(i);
-    console.log(element.className);
+    pieces.forEach((p) => {
+      if(p.position.x === parseInt(column) && p.position.y === parseInt(row) ){
+        if(pieceElement.classList.contains("redPiece")){
+          console.log(p.position.x);
+          if(p.position.x === 6) p.goStraight = false;
+          if(p.goStraight) p.position.x = parseInt(p.position.x) + p.step;
+          else p.position.x = parseInt(p.position.x) + p.stepOpposite
+          
+          if(p.position.x === 0) p.goStraight = true;
+        }else{
+          if(p.position.y === 6) p.goStraight = false;
+          if(p.goStraight) p.position.y =  parseInt(p.position.y) + p.step;
+          else p.position.y = parseInt(p.position.y) + p.stepOpposite;
+
+          if(p.position.y === 0) p.goStraight = true;
+
+        }
+      }
+      
+      newPieces.push(p);
+    })
     
-    let s = parseInt(element.style.gridColumnStart) + i
-    console.log(s)
-    //let f = 2 + parseInt(i);
-    let f = parseInt(element.style.gridColumnEnd) + i
-    console.log(f)
-    element.style.gridColumnStart = s.toString();
-    element.style.gridColumnEnd = f.toString();
-  
+    setPieces(newPieces);
+
+    if(column === '0'){
+      console.log(pieces)
+      console.log('hey')
+    }  
   }
 
-  for (let i=0; i < 5; i++)
+  for (let j = xAxis.length - 1; j >= 0; j--)
   {
-    board.push(
-      <div onClick={handleClick} class={`redPiece${i}`}>
-        <Tile piece={redPiece} />
-      </div>
-    )
-  }
-  for (let i=0; i < 5; i++)
-  {
-    board.push(
-      <div class={`greenPiece${i}`}>
-        <Tile piece={greenPiece} />
-      </div>
-    )
+    for (let i = 0; i < yAxis.length; i++)
+    {
+
+      const piece = pieces.find((p) =>
+        samePosition(p.position, { x: i, y: j })
+      );
+
+      let color = piece ? piece.color : undefined;
+
+      board.push(
+        <Tile 
+          key={`${j},${i}`} 
+          coordinates={`${j}${i}`}
+          color={color}
+          onClick={handleClick}
+        >
+        </Tile>
+      )
+    }
   }
   
   return (
