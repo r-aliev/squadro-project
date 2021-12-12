@@ -1,6 +1,10 @@
-.piece{
+.tile .piece{
   width: 100%;
   height: 100%;
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.tile .piece:hover{
+  cursor: pointer;
 }

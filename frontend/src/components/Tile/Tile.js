@@ -5,14 +5,18 @@ import greenPiece from "../../assets/images/green_piece.png";
 import redPiece from "../../assets/images/red_piece.png";
 
 
-const Tile = ({piece}) => {
-  if(piece===0) {
+const Tile = ({color, coordinates, onClick}) => {
+  if(color===1) {
     return (
-      <img src={redPiece} alt="red piece"/>
+      <div className="tile" data-coordinates={coordinates} onClick={onClick}>
+        {color && <div style={{backgroundImage: `url(${redPiece})`}} className="piece redPiece"></div>}
+      </div>
     );
   }else{
     return (
- <img src={greenPiece} alt="green piece"/>
+      <div className="tile" data-coordinates={coordinates} onClick={onClick}>
+        {color && <div style={{backgroundImage: `url(${greenPiece})`}} className="piece greenPiece"></div>}
+      </div>
     );
   }
 }
