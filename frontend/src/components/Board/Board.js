@@ -64,9 +64,9 @@ const Board = () => {
     }  
   }
 
-  for (let j = xAxis.length - 1; j >= 0; j--)
+  for (let j = 6; j >= 0; j--)
   {
-    for (let i = 0; i < yAxis.length; i++)
+    for (let i = 0; i < 7; i++)
     {
 
       const piece = pieces.find((p) =>
@@ -74,6 +74,7 @@ const Board = () => {
       );
 
       let color = piece ? piece.color : undefined;
+      let goStraight = piece && i !=6 && j!=6 ? piece.goStraight : undefined;
 
       board.push(
         <Tile 
@@ -81,6 +82,7 @@ const Board = () => {
           coordinates={`${j}${i}`}
           color={color}
           onClick={handleClick}
+          goStraight={goStraight}
         >
         </Tile>
       )
