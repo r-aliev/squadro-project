@@ -7,12 +7,6 @@ import {
 } from "../../Constants";
 
 
-const xAxis = ['1', '2', '3', '4', '5', '6', '7']; // columns
-const yAxis = ['1', '2', '3', '4', '5', '6', '7']; // rows
-
-const yLeftAndXtopValues = ['1', '3', '2', '3', '1'];
-const yRightAndXbottomValues = ['3', '1', '2', '1', '3'];
-
 const samePosition = (p1, p2) => {
   return p1.x === p2.x && p1.y === p2.y;
 }
@@ -38,16 +32,62 @@ const Board = () => {
       if(p.position.x === parseInt(column) && p.position.y === parseInt(row) ){
         if(pieceElement.classList.contains("redPiece")){
           console.log(p.position.x);
+          // direction control
           if(p.position.x === 6) p.goStraight = false;
-          if(p.goStraight) p.position.x = parseInt(p.position.x) + p.step;
-          else p.position.x = parseInt(p.position.x) + p.stepOpposite
-          
-          if(p.position.x === 0) p.goStraight = true;
-        }else{
-          if(p.position.y === 6) p.goStraight = false;
-          if(p.goStraight) p.position.y =  parseInt(p.position.y) + p.step;
-          else p.position.y = parseInt(p.position.y) + p.stepOpposite;
 
+          let xNoJump = p.goStraight ? p.position.x + p.step : p.position.x + p.stepOpposite;
+          // limit number min value to 0 and number max to 6
+          xNoJump = Math.min(Math.max(parseInt(xNoJump), 0), 6);
+
+          let pieceToJumpX = pieces.find((jpx) =>
+            samePosition(jpx.position, { x: xNoJump, y: p.position.y})
+          );
+          
+          if(pieceToJumpX === undefined && p.step === 3){
+            let xAdjacent = p.goStraight ? p.position.x + 1 : p.position.x - 1;
+            pieceToJumpX =  pieces.find((jpx) =>
+              samePosition(jpx.position, { x: xAdjacent, y: p.position.y})
+            );
+          }
+
+          if(pieceToJumpX !== undefined){
+            p.position.x = p.goStraight ? pieceToJumpX.position.x + 1 : pieceToJumpX.position.x - 1;
+          }else{
+            p.position.x = xNoJump;
+          }
+        
+          // direction control
+          if(p.position.x === 0) p.goStraight = true;
+
+        }else{
+
+          // direction control
+          if(p.position.y === 6) p.goStraight = false;
+          
+          // step control
+          let yNoJump = p.goStraight ? p.position.y + p.step : p.position.y + p.stepOpposite;
+          // limit number min value to 0 and number max to 6
+          yNoJump = Math.min(Math.max(parseInt(yNoJump), 0), 6);
+
+
+          let pieceToJumpY = pieces.find((jpy) =>
+            samePosition(jpy.position, { x: p.position.x, y: yNoJump})
+          );
+          
+          if(pieceToJumpY === undefined && p.step === 3){
+            let yAdjacent = p.goStraight ? p.position.y + 1 : p.position.y - 1;
+            pieceToJumpY =  pieces.find((jpy) =>
+              samePosition(jpy.position, { x: p.position.x, y: yAdjacent})
+            );
+          }
+
+          if(pieceToJumpY !== undefined){
+            p.position.y = p.goStraight ? pieceToJumpY.position.y + 1 : pieceToJumpY.position.y - 1;
+          }else{
+            p.position.y = yNoJump;
+          }
+
+          // direction control
           if(p.position.y === 0) p.goStraight = true;
 
         }
