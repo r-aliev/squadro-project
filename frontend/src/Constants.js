@@ -1,6 +1,3 @@
-const yLeftAndXtopValues = ['1', '3', '2', '3', '1'];
-const yRightAndXbottomValues = ['3', '1', '2', '1', '3'];
-
 export const initialBoardState = [
   {
     color: 2,
@@ -35,7 +32,6 @@ export const initialBoardState = [
     goStraight: true,
   },
   {
-    
     color: 2,
     position: {
       x: 4,
