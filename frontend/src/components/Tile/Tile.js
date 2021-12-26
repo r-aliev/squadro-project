@@ -10,16 +10,16 @@ import redPieceReverse from "../../assets/images/red_piece_reverse.png";
 
 const Tile = ({color, coordinates, onClick, goStraight}) => {
   let pieceImage = null;
-  if (color == 1){
+  if (color === 1){
     pieceImage = goStraight ? redPiece : redPieceReverse;
-  }else if(color == 2){
+  }else if(color === 2){
     pieceImage = goStraight ? greenPiece : greenPieceReverse;
   }
 
 
   if(color) {
     return (
-      <div className="tile" data-coordinates={coordinates} onClick={onClick}>
+      <div className="tile" disabled={true} data-coordinates={coordinates} onClick={onClick}>
         {<div style={{backgroundImage: `url(${pieceImage})`}} className={color===1 ? "piece redPiece" : "piece greenPiece"}></div>}
       </div>
     );

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Alert } from 'react-alert'
 import "./Board.css";
 import Tile from "../Tile/Tile";
 import { initialBoardState } from "../../Constants";
@@ -25,8 +25,11 @@ const Board = () => {
     let newPieces = [];
     let jumpedPieces = []
 
+    console.log('pieces length: ' + pieces.length)
+    let deletePiece;
 
     pieces.forEach((p) => {
+      deletePiece = false;
       // change if condition to funct
       if(samePosition(p.position, {x: parseInt(column), y: parseInt(row)})) { 
           const isRedPiece = pieceElement.classList.contains("redPiece")
@@ -125,12 +128,15 @@ const Board = () => {
             p.position.y = nextMainAxisPosition;
           }
 
-          // direction control
+          // just for piece direction control
           let finalMainAxisPosition = isRedPiece ? p.position.x : p.position.y;
-          if (finalMainAxisPosition === 0) p.goStraight = true;
-
+          if (finalMainAxisPosition === 0 ) {
+            deletePiece = true;
+            p.goStraight = true ;
+          }
       }
-      newPieces.push(p);
+      if(!deletePiece)
+        newPieces.push(p);
     });
 
     newPieces.some((jp) => {
@@ -143,8 +149,25 @@ const Board = () => {
       }
     })
 
-    setPieces(newPieces);
-  };
+    let numberRed=0;
+    let numberYellow=0;
+    for (let p of newPieces){
+      p.color === 1 ? numberRed++ : numberYellow++
+    }
+
+    if(numberRed === 1)
+    { 
+      alert("Red Won!")
+      setPieces(initialBoardState)
+    }else if(numberYellow === 1){
+      alert("Yellow Won!")
+      setPieces(initialBoardState)
+    }else{
+      setPieces(newPieces);
+    }
+
+    console.log('red: ' + numberRed + ', yellow: ' + numberYellow)
+  }
 
   for (let j = 6; j >= 0; j--) {
     for (let i = 0; i < 7; i++) {
