@@ -13,98 +13,88 @@ const Board = () => {
 
   let board = [];
 
+
   const handleClick = (e) => {
     const pieceElement = e.target;
     const element = e.currentTarget;
     console.log(pieceElement);
     console.log(element);
-    let row = element.dataset.coordinates[0];
-    let column = element.dataset.coordinates[1];
+    const row = element.dataset.coordinates[0];
+    const column = element.dataset.coordinates[1];
     console.log("row: " + row + " column:" + column);
     let newPieces = [];
 
     pieces.forEach((p) => {
       // change if condition to funct
-      if (p.position.x === parseInt(column) && p.position.y === parseInt(row)) {
-        if (pieceElement.classList.contains("redPiece")) {
+      if(samePosition(p.position, {x: parseInt(column), y: parseInt(row)})) { 
+          const isRedPiece = pieceElement.classList.contains("redPiece")
+          const mainAxisPosition = isRedPiece ? p.position.x : p.position.y
+          
           // direction control
-          if (p.position.x === 6) p.goStraight = false;
+          if (mainAxisPosition === 6) p.goStraight = false;
+          const step = p.goStraight ? p.step : p.stepOpposite;
 
-          let pieceToJumpX = undefined;
-          let xNext = p.goStraight
-            ? p.position.x + p.step
-            : p.position.x + p.stepOpposite;
+          let pieceToJump = undefined;
+          let nextMainAxisPosition = mainAxisPosition + step
+           
           // limit number min value to 0 and number max to 6
-          xNext = Math.min(Math.max(parseInt(xNext), 0), 6);
+          nextMainAxisPosition = Math.min(Math.max(parseInt(nextMainAxisPosition), 0), 6);
 
-          let step = p.goStraight ? p.step : p.stepOpposite;
-
+          // for samePosition to send corresponding argument depending on piece
+          let positionX = p.position.x;
+          let positionY = p.position.y;
           if (Math.abs(step) === 3) {
-            let xAdj = p.goStraight ? p.position.x + 1 : p.position.x - 1;
-            let adjPieceX = pieces.find((jpx) =>
-              samePosition(jpx.position, { x: xAdj, y: p.position.y })
+        
+            let mainAxisAdj = p.goStraight ? mainAxisPosition + 1 : mainAxisPosition - 1;
+            if(isRedPiece){
+              positionX = mainAxisAdj
+            }else{
+              positionY = mainAxisAdj;
+            }
+          
+            let hasAdjPieceX = pieces.find((jpx) =>
+              samePosition(jpx.position, { x: positionX, y: positionY})
             );
-            if (adjPieceX)
-              xNext = p.goStraight ? p.position.x + 2 : p.position.x - 2;
+            if (hasAdjPieceX)
+              nextMainAxisPosition = p.goStraight ? mainAxisPosition + 2 : mainAxisPosition - 2;
           }
 
           // check wether there is another piece in the future place of clicked piece
-          pieceToJumpX = pieces.find((jpx) =>
-            samePosition(jpx.position, { x: xNext, y: p.position.y })
+          if(isRedPiece){
+            positionX = nextMainAxisPosition
+          }else{
+            positionY = nextMainAxisPosition;
+          }
+
+          pieceToJump = pieces.find((jpx) =>
+            samePosition(jpx.position, { x: positionX, y: positionY })
           );
 
-          while (pieceToJumpX !== undefined) {
-            xNext = p.goStraight ? xNext + 1 : xNext - 1;
-            pieceToJumpX = pieces.find((jpx) =>
-              samePosition(jpx.position, { x: xNext, y: p.position.y })
+          while (pieceToJump !== undefined) {
+            nextMainAxisPosition = p.goStraight ? nextMainAxisPosition + 1 : nextMainAxisPosition - 1;
+
+            if(isRedPiece){
+              positionX = nextMainAxisPosition
+            }else{
+              positionY = nextMainAxisPosition;
+            }
+
+            pieceToJump = pieces.find((jpx) =>
+              samePosition(jpx.position, { x: positionX, y: positionY })
             );
           }
 
-          p.position.x = xNext;
-
-          // direction control
-          if (p.position.x === 0) p.goStraight = true;
-        } else {
-          // direction control
-          if (p.position.y === 6) p.goStraight = false;
-
-          let pieceToJumpY = undefined;
-          let yNext = p.goStraight
-            ? p.position.y + p.step
-            : p.position.y + p.stepOpposite;
-          // limit number min value to 0 and number max to 6
-          yNext = Math.min(Math.max(parseInt(yNext), 0), 6);
-
-          let step = p.goStraight ? p.step : p.stepOpposite;
-
-          if (Math.abs(step) === 3) {
-            let yAdj = p.goStraight ? p.position.y + 1 : p.position.y - 1;
-            let adjPieceY = pieces.find((jpy) =>
-              samePosition(jpy.position, { x: p.position.x, y: yAdj })
-            );
-            if (adjPieceY)
-              yNext = p.goStraight ? p.position.y + 2 : p.position.y - 2;
+          if(isRedPiece){
+            p.position.x = nextMainAxisPosition
+          }else{
+            p.position.y = nextMainAxisPosition;
           }
 
-          // check wether there is another piece in the future place of clicked piece
-          pieceToJumpY = pieces.find((jpy) =>
-            samePosition(jpy.position, { x: p.position.x, y: yNext })
-          );
-          console.log("piecrToJumpY " + pieceToJumpY);
-          while (pieceToJumpY !== undefined) {
-            yNext = p.goStraight ? yNext + 1 : yNext - 1;
-            pieceToJumpY = pieces.find((jpy) =>
-              samePosition(jpy.position, { x: p.position.x, y: yNext })
-            );
-          }
-
-          p.position.y = yNext;
-
           // direction control
-          if (p.position.y === 0) p.goStraight = true;
-        }
+          let finalMainAxisPosition = isRedPiece ? p.position.x : p.position.y;
+          if (finalMainAxisPosition === 0) p.goStraight = true;
+
       }
-
       newPieces.push(p);
     });
 
