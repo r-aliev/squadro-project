@@ -23,6 +23,8 @@ const Board = () => {
     const column = element.dataset.coordinates[1];
     console.log("row: " + row + " column:" + column);
     let newPieces = [];
+    let jumpedPieces = []
+
 
     pieces.forEach((p) => {
       // change if condition to funct
@@ -84,9 +86,42 @@ const Board = () => {
             );
           }
 
+
+          let jumpedPiece = null;
           if(isRedPiece){
-            p.position.x = nextMainAxisPosition
+            console.log('in isRedPiece')
+            for (let i = p.position.x + 1; i < nextMainAxisPosition; i++){
+              console.log('in for loop')
+              jumpedPiece = pieces.find((jpx) =>
+                samePosition(jpx.position, { x: i, y: p.position.y })
+              );
+              if(jumpedPiece != null){
+                jumpedPieces.push(jumpedPiece)
+              }
+            }
+
+            let iter = p.goStraight ? p.position.x + 1 : p.position.x - 1;
+            while(iter !== nextMainAxisPosition){
+              jumpedPiece = pieces.find((jpx) =>
+                samePosition(jpx.position, { x: iter, y: p.position.y })
+              );
+              if(jumpedPiece != null){
+                jumpedPieces.push(jumpedPiece)
+              }
+              iter = p.goStraight ? iter + 1 : iter - 1;
+            }
+            p.position.x = nextMainAxisPosition;
           }else{
+            let iter = p.goStraight ? p.position.y + 1 : p.position.y - 1;
+            while(iter !== nextMainAxisPosition){
+              jumpedPiece = pieces.find((jpx) =>
+                samePosition(jpx.position, { x: p.position.x, y: iter })
+              );
+              if(jumpedPiece != null){
+                jumpedPieces.push(jumpedPiece)
+              }
+              iter = p.goStraight ? iter + 1 : iter - 1;
+            }
             p.position.y = nextMainAxisPosition;
           }
 
@@ -97,6 +132,16 @@ const Board = () => {
       }
       newPieces.push(p);
     });
+
+    newPieces.some((jp) => {
+      if(jumpedPieces.includes(jp)){
+        if(jp.color === 1){
+          jp.position.x = jp.goStraight ?  0 : 6;
+        }else{
+          jp.position.y = jp.goStraight ?  0 : 6;
+        }
+      }
+    })
 
     setPieces(newPieces);
   };
