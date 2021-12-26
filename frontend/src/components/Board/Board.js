@@ -11,6 +11,8 @@ const samePosition = (p1, p2) => {
 const Board = () => {
   const [pieces, setPieces] = useState(initialBoardState);
 
+  const [turn, setTurn] = useState(1);
+
   let board = [];
 
 
@@ -31,7 +33,9 @@ const Board = () => {
     pieces.forEach((p) => {
       deletePiece = false;
       // change if condition to funct
-      if(samePosition(p.position, {x: parseInt(column), y: parseInt(row)})) { 
+      if(samePosition(p.position, {x: parseInt(column), y: parseInt(row)})
+        && p.color === turn) { 
+          turn === 1 ? setTurn(2) : setTurn(1)
           const isRedPiece = pieceElement.classList.contains("redPiece")
           const mainAxisPosition = isRedPiece ? p.position.x : p.position.y
           
