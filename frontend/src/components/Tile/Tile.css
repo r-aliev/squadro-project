@@ -8,3 +8,7 @@
 .tile .piece:hover{
   cursor: pointer;
 }
+
+#finished{
+  opacity: 0.5;
+}
