@@ -184,7 +184,7 @@ const Board = () => {
       );
 
       let color = piece ? piece.color : undefined;
-      let goStraight = piece && i != 6 && j != 6 ? piece.goStraight : undefined;
+      let goStraight = piece && i !== 6 && j !== 6 ? piece.goStraight : undefined;
 
       board.push(
         <Tile

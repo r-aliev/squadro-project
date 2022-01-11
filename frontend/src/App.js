@@ -1,31 +1,29 @@
-import React from 'react';
-import './App.css';
-import Board from "./components/Board/Board"
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import {Route, Routes} from 'react-router-dom'
 
-class App extends React.Component {
+// Pages
 
-  componentWillMount(){
-    this.fetchTasks()
-  }
+import Home from "./pages/Home" 
+import Game from "./pages/Game" 
 
-  fetchTasks(){
-    console.log("Fetching...")
 
-    fetch('http://127.0.0.1:8000/api/')
-    .then(response => response.json())
-    .then(data =>
-      console.log("Data:", data)
-      )
-  }
 
-  render() {
-    return(
-      <div id="app">
-        <Board />
-      </div>
-    )
-  }
+import "./App.css";
 
+function App()  {
+	return (
+		<Router>
+		<Routes>
+
+			
+		<Route exact path="/"  element={<Home/>}/>
+    <Route exact path="/game"  element={<Game/>}/>
+		
+		
+		</Routes>
+		</Router>
+	)
 }
 
 export default App;
