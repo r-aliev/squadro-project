@@ -149,6 +149,7 @@ const Board = () => {
       newPieces.push(p);
     });
 
+    // move back pieces that were jumped over 
     newPieces.some((jp) => {
       if (jumpedPieces.includes(jp)) {
         if (jp.color === 1) {
@@ -167,10 +168,14 @@ const Board = () => {
 
     if (numberRed === 1) {
       alert("Red Won!");
-      setPieces(initialBoardState);
+      window.location.reload(); // change in the future
+      // rendering doesn't work for now
+      //setPieces(initialBoardState);
     } else if (numberYellow === 1) {
       alert("Yellow Won!");
-      setPieces(initialBoardState);
+      window.location.reload(); // change in the future
+      // rendering doesn't work for now
+      //setPieces(initialBoardState);
     }
     setPieces(newPieces);
 
