@@ -1,9 +1,8 @@
-import React from 'react';
-import '../App.css';
-import Board from "../components/Board/Board";
+import React from "react";
+import "./Game.css";
+import Board from "../Board/Board";
 
-function Game() {
-
+const Game = () => {
   // componentWillMount(){
   //   this.fetchTasks()
   // }
@@ -18,15 +17,11 @@ function Game() {
   //     )
   // }
 
- 
-    return(
-        <React.Fragment>
-            <div id="app">
-                <Board />
-            </div>
-        </React.Fragment>
-    )
-
-}
+  return (
+    <div id="app">
+      <Board />
+    </div>
+  );
+};
 
 export default Game;

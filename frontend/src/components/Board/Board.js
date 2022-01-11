@@ -6,7 +6,7 @@ import { initialBoardState } from "../../Constants";
 
 const Board = () => {
   const [pieces, setPieces] = useState(initialBoardState);
-  const [turn, setTurn] = useState(1);
+  const [turn, setTurn] = useState(1); // may be better just use js syntax ?
 
   let board = [];
 
@@ -56,6 +56,7 @@ const Board = () => {
         let positionX = p.position.x;
         let positionY = p.position.y;
         if (Math.abs(step) === 3) {
+          // check wether there is an adjacent piece to clicked piece
           let mainAxisAdj = p.goStraight
             ? mainAxisPosition + 1
             : mainAxisPosition - 1;
