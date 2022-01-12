@@ -16,6 +16,8 @@ function HomeForm({Login}) {
     const submitHandler = e => {
         e.preventDefault();
         Login(details);
+        //TODO : if(pseudo != "")  Open Game page 
+        //       else Error message
     }
 
     const onBoardClick = e => {
@@ -44,8 +46,6 @@ function HomeForm({Login}) {
         }
     }
 
-    
-
     return (
         <form className="customForm" onSubmit={submitHandler}>
             <div className="mainContainer">
@@ -61,8 +61,8 @@ function HomeForm({Login}) {
                         <input type="text" name="pseudoInput" id="pseudoInput" onChange={e => setDetails({...details, pseudo: e.target.value})} value={details.pseudo}/>
                     </div>
                     <div className="difficulty">
-                        <button className="pinkLabel" id="easyBtn" onClick={e => setDetails({...details, level: "Easy"})}>Easy</button>
-                        <button className="pinkLabel" id="hardBtn" onClick={e => setDetails({...details, level: "Hard"})}>Hard</button>
+                        <button type="button" className="pinkLabel" id="easyBtn" onClick={e => setDetails({...details, level: "Easy"})}>Easy</button>
+                        <button type="button" className="pinkLabel" id="hardBtn" onClick={e => setDetails({...details, level: "Hard"})}>Hard</button>
                     </div>
                 </div>
 
@@ -75,7 +75,7 @@ function HomeForm({Login}) {
                 </div>
             </div>
 
-            <input className="pinkLabel" type="submit"  name="playBtn" id="playBtn" value="JOUER" />
+            <input className="pinkLabel" type="submit"  name="playBtn" id="playBtn" value="JOUER"/>
         </form>
     );
 
