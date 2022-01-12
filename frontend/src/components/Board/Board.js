@@ -190,6 +190,7 @@ const Board = () => {
     await sleep(3000);
 
     let aiPieces = getAIboard(pieces, 5)
+    console.log(aiPieces)
 
     setPieces(aiPieces);
 

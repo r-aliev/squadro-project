@@ -545,13 +545,14 @@ function aiMove(node) {
   generateTree(node);
   evaluationScore(node);
   AI(node);
-  let newNode = new Node();
-  newNode = getNewBoard(node);
+  let newBoard = new Board();
+  newBoard = getNewBoard(node);
   console.log("aiMove")
-  console.log(newNode);
-  console.log(newNode.board);
+  toString(node.board)
+  console.log(newBoard);
+  toString(newBoard);
 
-  return newNode;
+  return newBoard;
 }
 
 function transformBackToFront(board) {
@@ -574,11 +575,11 @@ function transformBackToFront(board) {
     let y = 6-p.x;
 
     frontPieces.push({
-      color,
+      color: color,
       position: { x, y },
-      step,
-      stepOpposite,
-      goStraight,
+      step: step,
+      stepOpposite: stepOpposite,
+      goStraight: goStraight,
     });
   });
   console.log(frontPieces);
@@ -591,7 +592,7 @@ const getAIboard = (frontPieces, depth)  => {
   let pieces = [];
   frontPieces.forEach((fp) => {
     let color = fp.color === 1 ? "RED" : "YELLOW";
-    let move = fp.step;
+    let move = fp.step; // ?? fp.stepOpposite consider?
     let x = 6 - fp.position.y;
     let y = fp.position.x;
     let sens = fp.goStraight ? 1 : -1;
@@ -608,7 +609,7 @@ const getAIboard = (frontPieces, depth)  => {
   toString(board)
   let finalBoard = new Board();
   finalBoard = aiMove(node);
-  toString(finalBoard)
+  //toString(finalBoard)
   let finalPieces = transformBackToFront(finalBoard);
   return finalPieces;
 }
