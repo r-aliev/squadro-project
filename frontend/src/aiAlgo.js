@@ -156,9 +156,12 @@ function makeMove(board, i) {
     if (boardClone.computer.pieces[i].sens == 1) {
       // on va verifier les cases qu'on va sauter dessus s'ils sont vides
       for (j = boardClone.computer.pieces[i].y + 1; j <= 6; j++) {
-        if ((boardClone.plateau.pieces[i + 1][j] == null) == false) {
+        if(j === 6){
+          deplace(boardClone, boardClone.computer.pieces[i], j); //on change le turn lors du deplacement
+          return boardClone;
+        }
+        else if ((boardClone.plateau.pieces[i + 1][j] == null) == false) {
           //si la case est occupé par l'adversaire
-
           initialisePion(boardClone, boardClone.player.pieces[j - 1]);
           precedentVide = false;
         } else if (
@@ -180,7 +183,14 @@ function makeMove(board, i) {
       }
     } else {
       for (j = boardClone.computer.pieces[i].y - 1; j >= 0; j--) {
-        if (boardClone.plateau.pieces[i + 1][j] != null) {
+        if(j === 0){
+          deplace(boardClone, boardClone.computer.pieces[i], j);
+          return boardClone;
+        }else if ((boardClone.plateau.pieces[i + 1][j] == null) == false)  {
+          console.log("boardClone")
+          console.log(boardClone)
+          console.log("boardClone.player.pieces")
+          console.log(boardClone.player.pieces)
           initialisePion(boardClone, boardClone.player.pieces[j - 1]);
           precedentVide = false;
         } else if (
@@ -208,7 +218,11 @@ function makeMove(board, i) {
       return null; //c'est le cas ou le pion a deja fait un aller/retour
     if (boardClone.player.pieces[i].sens == 1) {
       for (j = boardClone.player.pieces[i].x - 1; j >= 0; j--) {
-        if (boardClone.plateau.pieces[j][i + 1] != null) {
+        if(j === 0){
+          deplace(boardClone, boardClone.player.pieces[i], j);
+          return boardClone;
+        }
+        else if (boardClone.plateau.pieces[j][i + 1] != null) {
           initialisePion(boardClone, boardClone.computer.pieces[j - 1]);
           precedentVide = false;
         } else if (
@@ -227,7 +241,11 @@ function makeMove(board, i) {
       }
     } else {
       for (j = boardClone.player.pieces[i].x + 1; j <= 6; j++) {
-        if (boardClone.plateau.pieces[j][i + 1] != null) {
+        if(j === 6){
+          deplace(boardClone, boardClone.player.pieces[i], j);
+          return boardClone;
+        }
+        else if (boardClone.plateau.pieces[j][i + 1] != null) {
           initialisePion(boardClone, boardClone.computer.pieces[j - 1]);
           precedentVide = false;
         } else if (
@@ -371,7 +389,7 @@ function getNewBoard(node) {
   let newBoard = null;
   let maxValue = minScore * 30;
   for (let i = 0; i < 5; i++) {
-    if (node.nodes[i] != null) {
+    if (node.nodes && node.nodes[i] != null) {
       if (node.nodes[i].score > maxValue) {
         maxValue = node.nodes[i].score;
         newBoard = node.nodes[i].board;
@@ -547,19 +565,24 @@ function aiMove(node) {
   AI(node);
   let newBoard = new Board();
   newBoard = getNewBoard(node);
-  console.log("aiMove")
-  toString(node.board)
-  console.log(newBoard);
-  toString(newBoard);
-
+  console.log("aiMove");
   return newBoard;
 }
 
 function transformBackToFront(board) {
-  
-  let pieces = board.plateau.initialPieces;
+  const pieces = board.plateau.pieces;
+  let formattedPieces = [];
+  for (let i = 0; i < 7; i++) {
+    for (let j = 0; j < 7; j++) {
+      if (pieces[i][j] != null) formattedPieces.push(pieces[i][j]);
+    }
+  }
+  console.log("formattedPieces")
+  console.log(formattedPieces)
+  console.log("tansofrmBackToFront: ");
+  console.log(pieces);
   let frontPieces = [];
-  pieces.forEach((p) => {
+  formattedPieces.forEach((p) => {
     let color = p.color === "RED" ? 1 : 2;
     let step = p.move;
     let stepOpposite;
@@ -572,7 +595,7 @@ function transformBackToFront(board) {
     }
     let goStraight = p.sens === 1 ? true : false;
     let x = p.y;
-    let y = 6-p.x;
+    let y = 6 - p.x;
 
     frontPieces.push({
       color: color,
@@ -582,11 +605,10 @@ function transformBackToFront(board) {
       goStraight: goStraight,
     });
   });
-  console.log(frontPieces);
   return frontPieces;
 }
 
-const getAIboard = (frontPieces, depth)  => {
+const getAIboard = (frontPieces, depth) => {
   let playerPieces = [];
   let computerPieces = [];
   let pieces = [];
@@ -598,23 +620,27 @@ const getAIboard = (frontPieces, depth)  => {
     let sens = fp.goStraight ? 1 : -1;
 
     let p = new Piece(color, move, x, y, sens);
+    console.log(p);
     pieces.push(p);
-    color === "RED" ? playerPieces.push(p) : computerPieces.push(p);
+    color === "YELLOW" ? playerPieces.push(p) : computerPieces.push(p);
   });
   let joueur = new Player(playerPieces);
   let computer = new Player(computerPieces);
   let plateau = new Plateau(pieces);
   let board = new Board(joueur, computer, true, plateau);
   let node = new Node(0, depth, board, null);
-  toString(board)
+  toString(board);
   let finalBoard = new Board();
   finalBoard = aiMove(node);
-  //toString(finalBoard)
+  toString(finalBoard);
   let finalPieces = transformBackToFront(finalBoard);
+  console.log("finalPieces");
+  console.log(finalPieces);
   return finalPieces;
-}
+};
 
 export default getAIboard;
+
 /*    
     
     let P0= new Piece("YELLOW", 3, 6, 1, 1);

@@ -7,7 +7,7 @@ import getAIboard from "../../aiAlgo";
 
 const Board = () => {
   const [pieces, setPieces] = useState(initialBoardState);
-  const [turn, setTurn] = useState(1); // may be better just use js syntax ?
+  const [turn, setTurn] = useState(2); // may be better just use js syntax ?
 
   let board = [];
 
@@ -38,8 +38,7 @@ const Board = () => {
       deletePiece = false;
       // change if condition to funct
       if (
-        samePosition(p.position, { x: parseInt(column), y: parseInt(row) }) &&
-        p.color === turn
+        samePosition(p.position, { x: parseInt(column), y: parseInt(row) })
       ) {
         turn === 1 ? setTurn(2) : setTurn(1);
         const isRedPiece = pieceElement.classList.contains("redPiece");
@@ -186,10 +185,10 @@ const Board = () => {
     }
     setPieces(newPieces);
 
-    console.log(pieces);
     await sleep(3000);
 
     let aiPieces = getAIboard(pieces, 5)
+    console.log("aiPieces in Board.js")
     console.log(aiPieces)
 
     setPieces(aiPieces);
