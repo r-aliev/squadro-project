@@ -3,6 +3,7 @@ import { Alert } from "react-alert";
 import "./Board.css";
 import Tile from "../Tile/Tile";
 import { initialBoardState } from "../../Constants";
+import getAIboard from "../../aiAlgo";
 
 const Board = () => {
   const [pieces, setPieces] = useState(initialBoardState);
@@ -14,7 +15,11 @@ const Board = () => {
     return p1.x === p2.x && p1.y === p2.y;
   };
 
-  const handleClick = (e) => {
+  const sleep = (milliseconds) => {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  };
+
+  const handleClick = async (e) => {
     const pieceElement = e.target;
     const element = e.currentTarget;
     console.log(pieceElement);
@@ -22,6 +27,7 @@ const Board = () => {
     const row = element.dataset.coordinates[0];
     const column = element.dataset.coordinates[1];
     console.log("row: " + row + " column:" + column);
+
     let newPieces = [];
     let jumpedPieces = [];
 
@@ -150,7 +156,7 @@ const Board = () => {
       newPieces.push(p);
     });
 
-    // move back pieces that were jumped over 
+    // move back pieces that were jumped over
     newPieces.some((jp) => {
       if (jumpedPieces.includes(jp)) {
         if (jp.color === 1) {
@@ -180,6 +186,13 @@ const Board = () => {
     }
     setPieces(newPieces);
 
+    console.log(pieces);
+    await sleep(3000);
+
+    let aiPieces = getAIboard(pieces, 5)
+
+    setPieces(aiPieces);
+
     console.log("red: " + numberRed + ", yellow: " + numberYellow);
   };
 
@@ -190,7 +203,8 @@ const Board = () => {
       );
 
       let color = piece ? piece.color : undefined;
-      let goStraight = piece && i !== 6 && j !== 6 ? piece.goStraight : undefined;
+      let goStraight =
+        piece && i !== 6 && j !== 6 ? piece.goStraight : undefined;
 
       board.push(
         <Tile

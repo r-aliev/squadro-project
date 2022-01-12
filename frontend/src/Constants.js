@@ -56,7 +56,7 @@ export const initialBoardState = [
     color: 1,
     position: {
       x: 0,
-      y: 1,
+      y: 1, 
     },
     step: 1,
     stepOpposite: -3,
@@ -66,7 +66,7 @@ export const initialBoardState = [
     color: 1,
     position: {
       x: 0,
-      y: 2,
+      y: 2, 
     },
     step: 3,
     stepOpposite: -1,
@@ -76,7 +76,7 @@ export const initialBoardState = [
     color: 1,
     position: {
       x: 0,
-      y: 3,
+      y: 3, 
     },
     step: 2,
     stepOpposite: -2,
