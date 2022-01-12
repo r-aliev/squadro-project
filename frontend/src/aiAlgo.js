@@ -162,10 +162,11 @@ function makeMove(board, i) {
         }
         else if ((boardClone.plateau.pieces[i + 1][j] == null) == false) {
           //si la case est occupé par l'adversaire
+          console.log("1er")
           initialisePion(boardClone, boardClone.player.pieces[j - 1]);
           precedentVide = false;
         } else if (
-          !precedentVide &&
+          precedentVide === false &&
           boardClone.plateau.pieces[i + 1][j] == null
         ) {
           deplace(boardClone, boardClone.computer.pieces[i], j);
@@ -175,8 +176,6 @@ function makeMove(board, i) {
           j ===
             boardClone.computer.pieces[i].y + boardClone.computer.pieces[i].move
         ) {
-          //le cas ou il n'y a move de pion adversaire a initialiser
-
           deplace(boardClone, boardClone.computer.pieces[i], j); //on change le turn lors du deplacement
           return boardClone;
         }
@@ -187,21 +186,18 @@ function makeMove(board, i) {
           deplace(boardClone, boardClone.computer.pieces[i], j);
           return boardClone;
         }else if ((boardClone.plateau.pieces[i + 1][j] == null) == false)  {
-          console.log("boardClone")
-          console.log(boardClone)
-          console.log("boardClone.player.pieces")
-          console.log(boardClone.player.pieces)
+          console.log("2eme")
           initialisePion(boardClone, boardClone.player.pieces[j - 1]);
           precedentVide = false;
         } else if (
-          !precedentVide &&
+          precedentVide === false &&
           boardClone.plateau.pieces[i + 1][j] == null
         ) {
           deplace(boardClone, boardClone.computer.pieces[i], j);
           return boardClone;
         } else if (
-          precedentVide &&
-          j ==
+          precedentVide === true &&
+          j ===
             boardClone.computer.pieces[i].y - boardClone.computer.pieces[i].move
         ) {
           deplace(boardClone, boardClone.computer.pieces[i], j);
@@ -212,8 +208,8 @@ function makeMove(board, i) {
   } else {
     //partie joueur
     if (
-      boardClone.player.pieces[i].sens == -1 &&
-      boardClone.player.pieces[i].x == 6
+      boardClone.player.pieces[i].sens === -1 &&
+      boardClone.player.pieces[i].x === 6
     )
       return null; //c'est le cas ou le pion a deja fait un aller/retour
     if (boardClone.player.pieces[i].sens == 1) {
@@ -222,18 +218,19 @@ function makeMove(board, i) {
           deplace(boardClone, boardClone.player.pieces[i], j);
           return boardClone;
         }
-        else if (boardClone.plateau.pieces[j][i + 1] != null) {
+        else if ((boardClone.plateau.pieces[j][i + 1] == null) == false) {
+          console.log("3eme")
           initialisePion(boardClone, boardClone.computer.pieces[j - 1]);
           precedentVide = false;
         } else if (
-          !precedentVide &&
+          precedentVide === false &&
           boardClone.plateau.pieces[j][i + 1] == null
         ) {
           deplace(boardClone, boardClone.player.pieces[i], j);
           return boardClone;
         } else if (
-          precedentVide &&
-          j == boardClone.player.pieces[i].x - boardClone.player.pieces[i].move
+          precedentVide === true &&
+          j === boardClone.player.pieces[i].x - boardClone.player.pieces[i].move
         ) {
           deplace(boardClone, boardClone.player.pieces[i], j);
           return boardClone;
@@ -246,17 +243,18 @@ function makeMove(board, i) {
           return boardClone;
         }
         else if (boardClone.plateau.pieces[j][i + 1] != null) {
+          console.log("4eme")
           initialisePion(boardClone, boardClone.computer.pieces[j - 1]);
           precedentVide = false;
         } else if (
-          !precedentVide &&
+          precedentVide === false &&
           boardClone.plateau.pieces[j][i + 1] == null
         ) {
           deplace(boardClone, boardClone.player.pieces[i], j);
           return boardClone;
         } else if (
-          precedentVide &&
-          j == boardClone.player.pieces[i].x + boardClone.player.pieces[i].move
+          precedentVide === true &&
+          j === boardClone.player.pieces[i].x + boardClone.player.pieces[i].move
         ) {
           deplace(boardClone, boardClone.player.pieces[i], j);
           return boardClone;
@@ -264,6 +262,7 @@ function makeMove(board, i) {
       }
     }
   }
+  return boardClone;
 }
 
 /**
@@ -565,7 +564,6 @@ function aiMove(node) {
   AI(node);
   let newBoard = new Board();
   newBoard = getNewBoard(node);
-  console.log("aiMove");
   return newBoard;
 }
 
@@ -577,10 +575,6 @@ function transformBackToFront(board) {
       if (pieces[i][j] != null) formattedPieces.push(pieces[i][j]);
     }
   }
-  console.log("formattedPieces")
-  console.log(formattedPieces)
-  console.log("tansofrmBackToFront: ");
-  console.log(pieces);
   let frontPieces = [];
   formattedPieces.forEach((p) => {
     let color = p.color === "RED" ? 1 : 2;
@@ -620,7 +614,6 @@ const getAIboard = (frontPieces, depth) => {
     let sens = fp.goStraight ? 1 : -1;
 
     let p = new Piece(color, move, x, y, sens);
-    console.log(p);
     pieces.push(p);
     color === "YELLOW" ? playerPieces.push(p) : computerPieces.push(p);
   });
@@ -634,8 +627,7 @@ const getAIboard = (frontPieces, depth) => {
   finalBoard = aiMove(node);
   toString(finalBoard);
   let finalPieces = transformBackToFront(finalBoard);
-  console.log("finalPieces");
-  console.log(finalPieces);
+
   return finalPieces;
 };
 
