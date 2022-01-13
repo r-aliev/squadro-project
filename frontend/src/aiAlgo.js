@@ -276,12 +276,12 @@ function deplace(boardClone, pion, j) {
     boardClone.plateau.pieces[pion.x][pion.y] = null;
     pion.y = j;
     boardClone.plateau.pieces[pion.x][j] = pion;
-    if (pion.y == 6) {
+    if (pion.y === 6) {
       pion.sens = -1;
-      if (pion.move == 3) {
+      if (pion.move === 3) {
         pion.move = 1;
       }
-      if (pion.move == 1) {
+      else if (pion.move === 1) {
         pion.move = 3;
       }
     }
@@ -332,9 +332,11 @@ function initialisePion(boardClone, pion) {
  * @param {Node} node
  */
 
-function evaluationScore(node) {
+function evaluationScore(node, level) {
   if (isFinal(node)) {
-    return analysePlateau(node);
+    if (level===1) return analysePlateauLevel1(node);
+    if (level===2) return analysePlateauLevel2(node);
+    if (level===3) return analysePlateauLevel3(node);
   } else {
     if (node.board.turn == false) {
       //donc si c'etait l'ordi qui avait jouer
@@ -344,7 +346,7 @@ function evaluationScore(node) {
     }
     for (let i = 0; i < 5; i++) {
       if (node.nodes[i] != null) {
-        evaluationScore(node.nodes[i]);
+        evaluationScore(node.nodes[i], level);
       }
     }
   }
@@ -440,7 +442,7 @@ function AI(node) {
 /**
  * @param {Node} node
  */
-function analysePlateau(node) {
+function analysePlateauLevel2(node) {
   let score = 0;
   if (winner(node.board) !== null && winner(node.board) === true) {
     //si computer gagne
@@ -458,9 +460,8 @@ function analysePlateau(node) {
     }
   }
   
+  
   node.score = score;
-  console.log("SCOREEE" + score) ;
-  toString(node.board) ;
 }
 
 
@@ -480,83 +481,24 @@ function analysePlateauLevel3(node) {
   } else if (winner(node.board) !== null && winner(node.board) === false) {
     score = minScore + node.depth * 100; //dans ce cas c'est mieux d'avoir une profodeur min
   } else {
-    for (let i = 0; i < 5; i++) {
-      for (let j = 0; j < 5; j++) {
-        //On peut avoir la possibilité de sauter en dessus du pion adversaire
-        if (node.board.player.pieces[j].x === node.board.computer.pieces[i].x) {
-          if (
-            !(
-              node.board.computer.pieces[i].sens === -1 &&
-              node.board.player.pieces[j].y > node.board.computer.pieces[i].y
-            )
-          ) {
-            score +=
-              14 -
-              Math.abs(
-                node.board.player.pieces[j].y - node.board.computer.pieces[i].y
-              );
-            score += 4 - node.board.player.pieces[j].move;
-            if (
-              node.board.computer.pieces[i].sens === 1 &&
-              node.board.computer.pieces[i].y +
-                node.board.computer.pieces[i].move >=
-                node.board.player.pieces[j].y
-            )
-              score += 14;
-            if (
-              node.board.computer.pieces[i].sens === -1 &&
-              node.board.computer.pieces[i].y -
-                node.board.computer.pieces[i].move <=
-                node.board.player.pieces[j].y
-            )
-              score += 14;
-          }
-        }
-        //il peut avoir la possibilité de sauter en dessus de notre pion
-        if (node.board.player.pieces[j].y === node.board.computer.pieces[i].y) {
-          if (
-            !(
-              node.board.player.pieces[j].sens === -1 &&
-              node.board.player.pieces[j].x < node.board.computer.pieces[i].x
-            )
-          ) {
-            score -=
-              7 -
-              Math.abs(
-                node.board.player.pieces[j].x - node.board.computer.pieces[i].y
-              );
-            score -= 4 - node.board.computer.pieces[i].move;
-            if (
-              node.board.player.pieces[j].sens === 1 &&
-              node.board.player.pieces[j].x -
-                node.board.player.pieces[j].move <=
-                node.board.computer.pieces[i].x
-            ) {
-              score -= 14;
-            }
-            if (
-              node.board.player.pieces[j].sens === -1 &&
-              node.board.player.pieces[j].x +
-                node.board.player.pieces[j].move >=
-                node.board.computer.pieces[i].x
-            )
-              score -= 14;
-          }
-        }
-      }
-      if (node.board.computer.pieces[i].sens === 1) {
-        score += 6 + node.board.computer.pieces[i].y;
-      } else {
-        score += Math.abs(12 - node.board.computer.pieces[i].y) * 2;
-      }
-    }
+
     for (let i = 0; i < 5; i++) {
       if (node.board.player.pieces[i].sens === 1) {
-        score -= Math.abs(12 - node.board.player.pieces[i].x);
+        score -= (Math.abs(12 - node.board.player.pieces[i].x) + (3-node.board.player.pieces[i].move));
       } else {
-        score -= (6 + node.board.player.pieces[i].x) * 2;
+        score -= (6 + node.board.player.pieces[i].x) * 2 + (3-node.board.player.pieces[i].move);
       }
     }
+
+    for (let i = 0; i < 5; i++) {
+      if (node.board.computer.pieces[i].sens === 1) {
+        score += node.board.computer.pieces[i].y + (3-node.board.computer.pieces[i].move);
+      } else {
+        score += (12 - node.board.player.pieces[i].x) + (3-node.board.computer.pieces[i].move) ;
+      }
+    }
+
+
   }
   node.score = score;
 
@@ -589,7 +531,7 @@ function toString(board) {
           k += "| J" + l + "     |";
         }
       }
-      if (k == "") {
+      if (k === "") {
         s += "|  null  |";
       } else s += k;
     }
@@ -598,9 +540,9 @@ function toString(board) {
   console.log(s);
 }
 
-function aiMove(node) {
+function aiMove(node, level) {
   generateTree(node);
-  evaluationScore(node);
+  evaluationScore(node, level);
   AI(node);
   let newBoard = new Board();
   newBoard = getNewBoard(node);
@@ -657,7 +599,7 @@ function transformBackToFront(board) {
   return frontPieces;
 }
 
-const getAIboard = (frontPieces, depth) => {
+const getAIboard = (frontPieces, level) => {
   let playerPieces = [];
   let computerPieces = [];
   let pieces = [];
@@ -689,15 +631,28 @@ const getAIboard = (frontPieces, depth) => {
   let computer = new Player(computerPieces);
   let plateau = new Plateau(pieces);
   let board = new Board(joueur, computer, true, plateau);
-  let node = new Node(0, depth, board, null);
+  
+  let node ;
+
+  if (level===3) {
+    node = new Node(0, 5, board, null)
+  } else {
+    node = new Node(0, 1, board, null)
+  }
+
   toString(board);
   let finalBoard = new Board();
-  finalBoard = aiMove(node);
+  finalBoard = aiMove(node, level);
   toString(finalBoard);
   let finalPieces = transformBackToFront(finalBoard);
 
   return finalPieces;
 };
+
+
+//niveau 1 -> 1 analyse1
+//niveau 2 -> 1 analyse2
+//niveau 3 -> 5 analyse3
 
 export default getAIboard;
 
