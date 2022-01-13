@@ -559,7 +559,21 @@ function transformBackToFront(board) {
   }
   let frontPieces = [];
   formattedPieces.forEach((p) => {
-    let color = p.color === "RED" ? 1 : 2;
+    let color;
+    //let color = p.color === "RED" ? 1 : 2;
+    if(p.color === "RED"){
+      if(p.y === 0 && p.sens === -1){
+        color = 3
+      }else{
+        color = 1
+      }
+    }else if(p.color === "YELLOW"){
+      if(p.x===6 && p.sens === -1){
+        color = 4
+      }else{
+        color = 2
+      }
+    }
     let step ;
     let stepOpposite ;
 
@@ -604,7 +618,8 @@ const getAIboard = (frontPieces, level) => {
   let computerPieces = [];
   let pieces = [];
   frontPieces.forEach((fp) => {
-    let color = fp.color === 1 ? "RED" : "YELLOW";
+    let color = fp.color === 1 || fp.color === 3 ? "RED" : "YELLOW";
+
     let move = fp.goStraight ? fp.step : Math.abs(fp.stepOpposite); // ?? fp.stepOpposite consider?
     let x = 6 - fp.position.y;
     let y = fp.position.x;
@@ -640,10 +655,8 @@ const getAIboard = (frontPieces, level) => {
     node = new Node(0, 1, board, null)
   }
 
-  toString(board);
   let finalBoard = new Board();
   finalBoard = aiMove(node, level);
-  toString(finalBoard);
   let finalPieces = transformBackToFront(finalBoard);
 
   return finalPieces;

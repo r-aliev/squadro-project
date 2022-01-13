@@ -26,6 +26,30 @@ const Board = () => {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   };
 
+  const checkForWinner = (pieces) => {
+    let numberRed = 0;
+    let numberYellow = 0;
+    for (let p of pieces) {
+      if (p.color === 1) {
+        numberRed++;
+      } else if (p.color === 2) {
+        numberYellow++;
+      }
+    }
+
+    if (numberRed === 1) {
+      alert("Red Won!");
+      window.location.reload(); // change in the future
+      // rendering doesn't work for now
+      //setPieces(initialBoardState);
+    } else if (numberYellow === 1) {
+      alert("Yellow Won!");
+      window.location.reload(); // change in the future
+      // rendering doesn't work for now
+      //setPieces(initialBoardState);
+    }
+  };
+
   const handleClick = async (e) => {
     const pieceElement = e.target;
     const element = e.currentTarget;
@@ -42,7 +66,6 @@ const Board = () => {
 
     let movedAnyPiece = false;
 
-
     pieces.forEach((p) => {
       if (
         samePosition(p.position, { x: parseInt(column), y: parseInt(row) }) &&
@@ -51,6 +74,9 @@ const Board = () => {
         movedAnyPiece = true;
         if (location.state.gameType === "localGame") {
           turn === 1 ? setTurn(2) : setTurn(1);
+        }else{
+          // if play with ai  
+          turn === 2 && setTurn(-1) //cuz no color -1 (but there are colors: 1, 2, 3, 4)
         }
         const isRedPiece = pieceElement.classList.contains("redPiece");
         const mainAxisPosition = isRedPiece ? p.position.x : p.position.y;
@@ -160,7 +186,6 @@ const Board = () => {
         let finalMainAxisPosition = isRedPiece ? p.position.x : p.position.y;
         if (finalMainAxisPosition === 0) {
           p.color = isRedPiece ? 3 : 4;
-          p.goStraight = true;
         }
       }
       // all pieces push
@@ -180,28 +205,14 @@ const Board = () => {
       });
 
       setPieces(newPieces);
+      checkForWinner(newPieces);
 
       if (location.state.gameType === "singleGame") {
-        await sleep(3000);
+        await sleep(2000);
         let aiPieces = getAIboard(pieces, parseInt(location.state.level));
         setPieces(aiPieces);
-      }
-      let numberRed = 0;
-      let numberYellow = 0;
-      for (let p of pieces) {
-        p.color === 1 ? numberRed++ : numberYellow++;
-      }
-  
-      if (numberRed === 1) {
-        alert("Red Won!");
-        window.location.reload(); // change in the future
-        // rendering doesn't work for now
-        //setPieces(initialBoardState);
-      } else if (numberYellow === 1) {
-        alert("Yellow Won!");
-        window.location.reload(); // change in the future
-        // rendering doesn't work for now
-        //setPieces(initialBoardState);
+        checkForWinner(aiPieces);
+        setTurn(2); // to allow yellows to move again
       }
     }
   };
@@ -215,7 +226,7 @@ const Board = () => {
       let color = piece ? piece.color : undefined;
       let goStraight =
         piece && i !== 6 && j !== 6 ? piece.goStraight : undefined;
-      
+
       let gameType = location.state ? location.state.gameType : undefined;
 
       board.push(
