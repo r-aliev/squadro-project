@@ -40,8 +40,8 @@
 .difficulty {
     margin-top: 20px;
     width: 300px;
-    display: flex;
-    justify-content: space-around;
+    display: none;
+    justify-content: space-evenly;
 }
 
 .customForm {
@@ -87,12 +87,20 @@
     flex-direction: column;
     width: 33%;
     align-items: center;
-    align-self: center;
+    align-self: flex-end;
+    margin-bottom: 50px;
 }
 
 .rightPack {
     text-align: center;
     width: 33%;
+}
+
+.gameMode {
+    margin-top: 20px;
+    width: 300px;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 #pieceContainer {
@@ -104,6 +112,11 @@
 }
 
 #hardBtn {
+    background-color: #b9b9b9;
+    color: #6d6d6d;
+}
+
+#aiBtn {
     background-color: #b9b9b9;
     color: #6d6d6d;
 }
