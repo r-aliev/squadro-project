@@ -1,20 +1,32 @@
 .header {
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   width: 100%;
-  height: 6rem;
-  line-height: 6rem;
-  background-color: rgb(112, 127, 160);
-  font-size: 40px;
-  font-family: 'Open Sans', sans-serif;
-  color: aliceblue;
-}
-.header b {
-  margin-left: 33%;
+  height: 8rem;
+  box-shadow: 0 1rem 4rem rgba(21, 34, 50, 0.08);
+  background-color: #fff;
 }
 
-.logo {
-  float: left;
-  margin: 0.5rem 0rem auto 2rem;
-  width: 150px;
-  height: 5rem;
+.header .navbar-brand {
+  padding: 0.75rem 1rem;
+}
+
+.header .navbar-toggler{
+  top: 0.25rem;
+  right: 1rem;
+}
+
+.collapse {
+  margin-left: auto;
+}
+
+#squadro-title {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  width: 160px;
+  text-align: center;
+  margin: auto;
+  white-space: nowrap;
+  padding-bottom: 13px;
+  color: black;
 }

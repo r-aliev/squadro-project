@@ -1,5 +1,28 @@
+.home {
+  height: 100vh !important;
+  background-color: white;
+}
+
+
+.squadro-description {
+  font-family: Cursive;
+  font-size: large;
+}
+
+.btn-play {
+  background-color: black !important;
+  color: white;
+  padding: 1rem 1.5rem !important;
+  font-size: 1.5rem !important;
+}
+
+.choice{
+    cursor: pointer;
+}
+
+
+/*
 .Home {
-    height: fit-content;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -126,3 +149,4 @@
     font-size: 30px;
     font-weight: 700;
 }
+*/
