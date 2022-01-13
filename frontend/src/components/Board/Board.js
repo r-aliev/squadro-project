@@ -1,13 +1,20 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { Alert } from "react-alert";
 import "./Board.css";
 import Tile from "../Tile/Tile";
 import { initialBoardState } from "../../Constants";
 import getAIboard from "../../aiAlgo";
+import { useLocation } from "react-router";
 
 const Board = () => {
   const [pieces, setPieces] = useState(initialBoardState);
   const [turn, setTurn] = useState(2); // may be better just use js syntax ?
+  const location = useLocation();
+  console.log(location.state.gameType);
+  // gameType
+  // boardColor
+  // pieceColor
+  // level
 
   let board = [];
 
@@ -32,15 +39,19 @@ const Board = () => {
     let jumpedPieces = [];
 
     console.log("pieces length: " + pieces.length);
-    let deletePiece;
+
+    let movedAnyPiece = false;
+
 
     pieces.forEach((p) => {
-      deletePiece = false;
-      // change if condition to funct
       if (
-        samePosition(p.position, { x: parseInt(column), y: parseInt(row) })
+        samePosition(p.position, { x: parseInt(column), y: parseInt(row) }) &&
+        turn === p.color
       ) {
-        turn === 1 ? setTurn(2) : setTurn(1);
+        movedAnyPiece = true;
+        if (location.state.gameType === "localGame") {
+          turn === 1 ? setTurn(2) : setTurn(1);
+        }
         const isRedPiece = pieceElement.classList.contains("redPiece");
         const mainAxisPosition = isRedPiece ? p.position.x : p.position.y;
 
@@ -152,48 +163,47 @@ const Board = () => {
           p.goStraight = true;
         }
       }
+      // all pieces push
       newPieces.push(p);
     });
 
-    // move back pieces that were jumped over
-    newPieces.some((jp) => {
-      if (jumpedPieces.includes(jp)) {
-        if (jp.color === 1) {
-          jp.position.x = jp.goStraight ? 0 : 6;
-        } else {
-          jp.position.y = jp.goStraight ? 0 : 6;
+    if (movedAnyPiece) {
+      // move back pieces that were jumped over
+      newPieces.some((jp) => {
+        if (jumpedPieces.includes(jp)) {
+          if (jp.color === 1) {
+            jp.position.x = jp.goStraight ? 0 : 6;
+          } else {
+            jp.position.y = jp.goStraight ? 0 : 6;
+          }
         }
+      });
+
+      setPieces(newPieces);
+
+      if (location.state.gameType === "singleGame") {
+        await sleep(3000);
+        let aiPieces = getAIboard(pieces, parseInt(location.state.level));
+        setPieces(aiPieces);
       }
-    });
-
-    let numberRed = 0;
-    let numberYellow = 0;
-    for (let p of newPieces) {
-      p.color === 1 ? numberRed++ : numberYellow++;
+      let numberRed = 0;
+      let numberYellow = 0;
+      for (let p of pieces) {
+        p.color === 1 ? numberRed++ : numberYellow++;
+      }
+  
+      if (numberRed === 1) {
+        alert("Red Won!");
+        window.location.reload(); // change in the future
+        // rendering doesn't work for now
+        //setPieces(initialBoardState);
+      } else if (numberYellow === 1) {
+        alert("Yellow Won!");
+        window.location.reload(); // change in the future
+        // rendering doesn't work for now
+        //setPieces(initialBoardState);
+      }
     }
-
-    if (numberRed === 1) {
-      alert("Red Won!");
-      window.location.reload(); // change in the future
-      // rendering doesn't work for now
-      //setPieces(initialBoardState);
-    } else if (numberYellow === 1) {
-      alert("Yellow Won!");
-      window.location.reload(); // change in the future
-      // rendering doesn't work for now
-      //setPieces(initialBoardState);
-    }
-    setPieces(newPieces);
-
-    await sleep(3000);
-
-    let aiPieces = getAIboard(pieces, 5)
-    console.log("aiPieces in Board.js")
-    console.log(aiPieces)
-
-    setPieces(aiPieces);
-
-    console.log("red: " + numberRed + ", yellow: " + numberYellow);
   };
 
   for (let j = 6; j >= 0; j--) {
@@ -205,6 +215,8 @@ const Board = () => {
       let color = piece ? piece.color : undefined;
       let goStraight =
         piece && i !== 6 && j !== 6 ? piece.goStraight : undefined;
+      
+      let gameType = location.state ? location.state.gameType : undefined;
 
       board.push(
         <Tile
@@ -213,6 +225,7 @@ const Board = () => {
           color={color}
           onClick={handleClick}
           goStraight={goStraight}
+          gameType={gameType}
         ></Tile>
       );
     }

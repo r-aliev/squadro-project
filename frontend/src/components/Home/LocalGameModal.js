@@ -65,9 +65,10 @@ const LocalGameModal = ({ isShown, handleClose }) => {
 							variant="success"
 							className="mx-4"
 							onClick={() => 
-								navigate("/game", {
+								navigate("/game", { state: {
 									boardColor: blackBoard ? "black" : "white",
                   gameType: "localGame",
+                }
 								})
 							}
 						>

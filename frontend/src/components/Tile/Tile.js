@@ -8,7 +8,7 @@ import redPieceReverse from "../../assets/images/red_piece_reverse.png";
 
 
 
-const Tile = ({color, coordinates, onClick, goStraight}) => {
+const Tile = ({color, coordinates, onClick, goStraight, gameType}) => {
   let pieceImage = null;
   if (color === 1 || color === 3){
     pieceImage = goStraight ? redPiece : redPieceReverse;
@@ -17,12 +17,14 @@ const Tile = ({color, coordinates, onClick, goStraight}) => {
   }
 
   let pieceId = ""
-  if (color === 3 || color === 4) pieceId = "finished"
+  if (color === 3 || color === 4) pieceId = "finished";
+  let className = color===1 ? "piece redPiece" : "piece greenPiece";
+  if (gameType === "singleGame" && color === 1) className = className + " blockCursor";
 
   if(color) {
     return (
-      <div className="tile" disabled={true} data-coordinates={coordinates} onClick={onClick}>
-        <div style={{backgroundImage: `url(${pieceImage})`}} className={color===1 ? "piece redPiece" : "piece greenPiece"} id={pieceId} ></div>
+      <div className="tile" data-coordinates={coordinates} onClick={onClick}>
+        <div style={{backgroundImage: `url(${pieceImage})`}} className={className} id={pieceId} ></div>
       </div>
     );
   }else{

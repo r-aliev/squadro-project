@@ -123,11 +123,12 @@ const SingleGameModal = ({ isShown, handleClose }) => {
 							variant="success"
 							className="mx-4"
 							onClick={() => 
-								navigate("/game", {
+								navigate("/game", { state: {
 									boardColor: blackBoard ? "black" : "white",
 									pieceColor: redPiece ? "red" : "green",
 									level: radioValue,
 									gameType: "singleGame",
+								}
 								})
 							}
 						>

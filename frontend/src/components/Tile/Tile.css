@@ -9,6 +9,10 @@
   cursor: pointer;
 }
 
+.blockCursor{
+  cursor: default !important;
+}
+
 #finished{
   opacity: 0.5;
 }
