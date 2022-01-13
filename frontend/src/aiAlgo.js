@@ -162,7 +162,6 @@ function makeMove(board, i) {
         }
         else if ((boardClone.plateau.pieces[i + 1][j] == null) == false) {
           //si la case est occupé par l'adversaire
-          console.log("1er")
           initialisePion(boardClone, boardClone.player.pieces[j - 1]);
           precedentVide = false;
         } else if (
@@ -449,6 +448,38 @@ function analysePlateau(node) {
   } else if (winner(node.board) !== null && winner(node.board) === false) {
     score = minScore + node.depth * 100; //dans ce cas c'est mieux d'avoir une profodeur min
   } else {
+    
+    for (let i = 0; i < 5; i++) {
+      if (node.board.player.pieces[i].sens === 1) {
+        score -= Math.abs(12 - node.board.player.pieces[i].x);
+      } else {
+        score -= (6 + node.board.player.pieces[i].x) * 2;
+      }
+    }
+  }
+  
+  node.score = score;
+  console.log("SCOREEE" + score) ;
+  toString(node.board) ;
+}
+
+
+/*
+*
+*
+*
+*/
+
+
+
+function analysePlateauLevel3(node) {
+  let score = 0;
+  if (winner(node.board) !== null && winner(node.board) === true) {
+    //si computer gagne
+    score = maxScore + node.depth * 100; //on note meme pour la profondeur, plus depth est grande plus c'est mieux
+  } else if (winner(node.board) !== null && winner(node.board) === false) {
+    score = minScore + node.depth * 100; //dans ce cas c'est mieux d'avoir une profodeur min
+  } else {
     for (let i = 0; i < 5; i++) {
       for (let j = 0; j < 5; j++) {
         //On peut avoir la possibilité de sauter en dessus du pion adversaire
@@ -460,7 +491,7 @@ function analysePlateau(node) {
             )
           ) {
             score +=
-              1000 -
+              14 -
               Math.abs(
                 node.board.player.pieces[j].y - node.board.computer.pieces[i].y
               );
@@ -528,7 +559,16 @@ function analysePlateau(node) {
     }
   }
   node.score = score;
+
 }
+
+
+
+function analysePlateauLevel1(node) {
+  node.score = Math.floor(Math.random()* (80)) + - 40 ;
+}
+
+
 
 function toString(board) {
   let s = "";
@@ -578,15 +618,30 @@ function transformBackToFront(board) {
   let frontPieces = [];
   formattedPieces.forEach((p) => {
     let color = p.color === "RED" ? 1 : 2;
-    let step = p.move;
-    let stepOpposite;
-    if (p.move === 1) {
-      stepOpposite = -3;
-    } else if (p.move === 3) {
-      stepOpposite = -1;
-    } else {
-      stepOpposite = -2;
+    let step ;
+    let stepOpposite ;
+
+    if(p.sens === 1){
+      step = p.move;
+      if(step === 1){
+        stepOpposite = -3;
+      }else if(step === 3){
+        stepOpposite = -1;
+      }else{
+        stepOpposite = -2;
+      }
+    }else if(p.sens === -1){
+      stepOpposite = (-1) * p.move;
+      if(p.move === 1){
+        step = 3;
+      }else if(p.move === 3){
+        step = 1;
+      }else{
+        step = 2
+      }
     }
+
+
     let goStraight = p.sens === 1 ? true : false;
     let x = p.y;
     let y = 6 - p.x;
@@ -608,7 +663,7 @@ const getAIboard = (frontPieces, depth) => {
   let pieces = [];
   frontPieces.forEach((fp) => {
     let color = fp.color === 1 ? "RED" : "YELLOW";
-    let move = fp.step; // ?? fp.stepOpposite consider?
+    let move = fp.goStraight ? fp.step : Math.abs(fp.stepOpposite); // ?? fp.stepOpposite consider?
     let x = 6 - fp.position.y;
     let y = fp.position.x;
     let sens = fp.goStraight ? 1 : -1;
@@ -617,6 +672,19 @@ const getAIboard = (frontPieces, depth) => {
     pieces.push(p);
     color === "YELLOW" ? playerPieces.push(p) : computerPieces.push(p);
   });
+
+  playerPieces.sort((a,b)=> {
+    if (a.y < b.y) return -1;
+    if (a.y > b.y) return 1 ;
+    return 0
+  })
+
+  computerPieces.sort((a,b)=> {
+    if (a.x < b.x) return -1;
+    if (a.x > b.x) return 1 ;
+    return 0
+  })
+
   let joueur = new Player(playerPieces);
   let computer = new Player(computerPieces);
   let plateau = new Plateau(pieces);
