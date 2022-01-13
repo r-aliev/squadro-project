@@ -24,6 +24,7 @@
     background-color: rgb(189, 189, 189);
     border: none;
     padding: 0 10px 0 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
 .formDiv {
@@ -122,6 +123,7 @@
 }
 
 .buttonStandard {
+    cursor: pointer;
     border: none;
     border-radius: 5% 5% 5% 5%;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
@@ -138,4 +140,20 @@
     margin-top: 5%;
     font-size: 30px;
     font-weight: 700;
+}
+
+#redPiece {
+    cursor: pointer;
+}
+
+#yellowPiece {
+    cursor: pointer;
+}
+
+#blackBoard {
+    cursor: pointer;
+}
+
+#whiteBoard {
+    cursor: pointer;
 }

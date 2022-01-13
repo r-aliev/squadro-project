@@ -18,13 +18,13 @@ function HomeForm({Login}) {
         Login(details);
         //TODO : if(pseudo != "")  Open Game page 
         //       else Error message
-        if(details.pseudo != "") window.open("../Game/Game");
+        if(details.pseudo !== "") window.open("../Game/Game");
     }
 
     const onBoardClick = e => {
         if(e.target.id === "blackBoard"){
-            e.target.src=black_board_selected;
-            document.getElementById("whiteBoard").src=white_board_unselected;
+            e.target.src = black_board_selected;
+            document.getElementById("whiteBoard").src = white_board_unselected;
             setDetails({...details, boardColor: "Black"});
         }
         else{
@@ -81,10 +81,10 @@ function HomeForm({Login}) {
         }
 
         var state = document.getElementById("difficulty").style.display;
-        if (state == 'flex' && e.target.id === "localBtn") {
+        if (state === 'flex' && e.target.id === "localBtn") {
             document.getElementById("difficulty").style.display = 'none';
             document.getElementById("midPack").style.marginBottom = "50px";
-        } else if (state != 'flex' && e.target.id === "aiBtn") {
+        } else if (state !== 'flex' && e.target.id === "aiBtn") {
             document.getElementById("difficulty").style.display = 'flex';
             document.getElementById("midPack").style.marginBottom = "0px";
         }
