@@ -1,5 +1,6 @@
 import React from "react";
 import "./Game.css";
+import Header from "../Header/Header";
 import Board from "../Board/Board";
 
 const Game = () => {
@@ -18,9 +19,21 @@ const Game = () => {
   // }
 
   return (
-    <div id="app">
-      <Board />
+    <div>
+      <Header />
+      <div className="mainContent">
+        <div className="box" id="adversaireBox">
+        </div>
+
+        <div id="app">
+          <Board />
+        </div>
+
+        <div className="box" id="playerBox">
+        </div>
+      </div>
     </div>
+    
   );
 };
 

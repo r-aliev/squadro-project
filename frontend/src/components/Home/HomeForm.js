@@ -18,7 +18,7 @@ function HomeForm({Login}) {
         Login(details);
         //TODO : if(pseudo != "")  Open Game page 
         //       else Error message
-        if(details.pseudo !== "") window.open("../Game/Game");
+        if(details.pseudo !== "") window.open("../Game");
     }
 
     const onBoardClick = e => {
