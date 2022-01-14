@@ -97,7 +97,7 @@ function gamenode() {}
  */
 
 function possibleNodes(node) {
-  if (winner(node.board) !== null) throw Error("possibleNodes");
+  if (winner(node.board) !== null) return null;
   let childNode = []; //initialiser la variable
   for (let i = 0; i < 5; i++) {
     //On deplace noeud par noeud, on initialise les parametre de chaque noeud, on l'evalue s'il est un noeud final
