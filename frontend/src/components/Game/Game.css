@@ -1,4 +1,4 @@
-#app{
+#app {
   display: grid;
   place-content: center;
   height: 100vh;
@@ -7,13 +7,53 @@
   grid-template-columns: repeat(3, 1fr);
 }
 
-#title{
-  grid-column: 2 / 3; 
+#title {
+  grid-column: 2 / 3;
 }
 
-#board{
+#board {
   grid-row: 2 / 3;
   grid-column: 2/3;
   justify-self: center;
   align-self: center;
+}
+
+#leftPanel {
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+  justify-self: center;
+  align-self: center;
+  z-index: 2;
+  background-repeat: no-repeat, repeat;
+  background-size: 100%;
+  width: 185px;
+  height: 103px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.piecesPannel{
+  display:flex;
+  margin-left: 1rem;
+  margin-top: 0.6rem;
+}
+
+.piecesImage{
+  width: 2.38rem;
+}
+
+#rightPanel {
+  grid-row: 2 / 3;
+  grid-column: 3 / 4;
+  justify-self: center;
+  align-self: center;
+  z-index: 2;
+  background-repeat: no-repeat, repeat;
+  background-size: 100%;
+  width: 185px;
+  height: 103px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
