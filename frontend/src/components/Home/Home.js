@@ -6,10 +6,14 @@ import squadro_game from "../../assets/images/squadro_game.png";
 import { useState } from "react";
 import LocalGameModal from "./LocalGameModal";
 import SingleGameModal from "./SingleGameModal";
+import TutoModal from "./TutoModal";
+import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Home = () => {
   const [localGameModal, setLocalGameModal] = useState(false);
   const [singleGameModal, setSingleGameModal] = useState(false);
+  const [tutoModal, setTutoModal] = useState(false);
 
   return (
     <div className="home">
@@ -60,6 +64,10 @@ const Home = () => {
           </Stack>
         </Row>
       </Container>
+
+      <Button id="btn-tuto" variant="dark" onClick={() => setTutoModal(true)}>
+        <FontAwesomeIcon icon={faQuestionCircle} /> TUTO
+      </Button>
       <LocalGameModal
         isShown={localGameModal}
         handleClose={() => setLocalGameModal(false)}
@@ -68,6 +76,7 @@ const Home = () => {
         isShown={singleGameModal}
         handleClose={() => setSingleGameModal(false)}
       />
+      <TutoModal isShown={tutoModal} handleClose={() => setTutoModal(false)} />
     </div>
   );
 };

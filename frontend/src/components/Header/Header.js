@@ -4,6 +4,7 @@ import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import squadro_title from "../../assets/images/squadro_title.png"
 
 import logo from "../../assets/images/logo.jpg";
 
@@ -16,14 +17,14 @@ const Header = () => {
       className="header"
     >
       <LinkContainer exact={true} to="/">
-        <Navbar.Brand className="col-3 mr-0" href="#home">
+        <Navbar.Brand className="col-3 mr-0 my-4" href="#home">
           <img src={logo} height={100} alt="Logo of DigiTop"></img>
         </Navbar.Brand>
       </LinkContainer>
       
-        <Navbar.Text className="col-6">
-          <h1 id="squadro-title">Squadro ...</h1>
-        </Navbar.Text>
+        <Navbar.Brand className="col-7">
+          <img src={squadro_title} width={700} alt="title"></img>
+        </Navbar.Brand>
         <Navbar.Toggle className="mr-3 position-absolute d-md-none" />
         <LinkContainer exact={true} to="/sign-in">
           <Nav.Link href="#" className="ml-auto mr-3 d-none d-md-block">

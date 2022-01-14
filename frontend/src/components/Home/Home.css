@@ -17,6 +17,12 @@
   cursor: pointer;
 }
 
+#btn-tuto{
+    position:absolute;
+    bottom: 5rem;
+    right: 5rem;
+}
+
 /*
 .Home {
     display: flex;
