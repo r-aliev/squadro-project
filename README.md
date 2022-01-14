@@ -2,7 +2,7 @@
 
 ### Installation
   
-    Assume that you have docker, docker-compose up and npm installed.
+    Assume sure you have a recent version of Node.js installed.
 
     In order to run the application in local environment follow instructions below:
 
