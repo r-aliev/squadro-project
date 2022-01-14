@@ -409,34 +409,30 @@ function isFinal(node) {
 
 /**
  * @param {Node} node
- * @param {Number} alpha
- * @param {Number} beta
  */
 
-function alphabeta(node, alpha, beta) {
+function minMax(node) {
   if (isFinal(node)) return;
 
   if (node.board.turn === true) {
     for (let i = 0; i < 5; i++) {
       if (node.nodes[i] != null) {
-        alphabeta(node.nodes[i], alpha, beta);
+        alphabeta(node.nodes[i]);
         node.score = Math.max(node.score, node.nodes[i].score);
       }
-      alpha = Math.max(alpha, node.score);
     }
   } else {
     for (let i = 0; i < 5; i++) {
       if (node.nodes[i] != null) {
-        alphabeta(node.nodes[i], alpha, beta);
+        alphabeta(node.nodes[i]);
         node.score = Math.min(node.score, node.nodes[i].score);
       }
-      beta = Math.min(beta, node.score);
     }
   }
 }
 
 function AI(node) {
-  alphabeta(node, maxScore * 20, minScore * 20);
+  minMax(node);
 }
 
 /**
