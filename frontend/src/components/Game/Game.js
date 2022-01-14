@@ -42,7 +42,7 @@ const Game = () => {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   };
 
-  const checkForWinner = (pieces) => {
+  const checkForWinner = async (pieces) => {
     let numberRed = 0;
     let numberYellow = 0;
     for (let p of pieces) {
@@ -54,11 +54,13 @@ const Game = () => {
     }
 
     if (numberRed === 1) {
+      await sleep(1000) ;
       alert("Red Won!");
       window.location.reload(); // change in the future
       // rendering doesn't work for now
       //setPieces(initialBoardState);
     } else if (numberYellow === 1) {
+      await sleep(1000) ;
       alert("Yellow Won!");
       window.location.reload(); // change in the future
       // rendering doesn't work for now
@@ -66,6 +68,7 @@ const Game = () => {
     }
   };
 
+  
   const handleClick = async (e) => {
     const pieceElement = e.target;
     const element = e.currentTarget;
