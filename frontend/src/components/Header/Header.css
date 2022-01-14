@@ -1,8 +1,7 @@
 .header {
   width: 100%;
   height: 8rem;
-  box-shadow: 0 1rem 4rem rgba(21, 34, 50, 0.08);
-  background-color: #fff;
+  background-color: white !important;
 }
 
 .header .navbar-brand {

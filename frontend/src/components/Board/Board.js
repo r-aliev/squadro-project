@@ -5,12 +5,21 @@ import Tile from "../Tile/Tile";
 import { initialBoardState } from "../../Constants";
 import getAIboard from "../../aiAlgo";
 import { useLocation } from "react-router";
+import white_board from "../../assets/images/white_board.png";
+import black_board from "../../assets/images/black_board.png";
 
 const Board = () => {
   const [pieces, setPieces] = useState(initialBoardState);
   const [turn, setTurn] = useState(2); // may be better just use js syntax ?
   const location = useLocation();
   console.log(location.state.gameType);
+  const gameType = location.state ? location.state.gameType : undefined;
+  const boardColor = location.state.boardColor === "black" ? black_board : white_board;
+  
+  let playerPieceColor = undefined;
+  if(gameType === "singleGame"){
+    playerPieceColor =  location.state.pieceColor;
+  }
   // gameType
   // boardColor
   // pieceColor
@@ -227,7 +236,6 @@ const Board = () => {
       let goStraight =
         piece && i !== 6 && j !== 6 ? piece.goStraight : undefined;
 
-      let gameType = location.state ? location.state.gameType : undefined;
 
       board.push(
         <Tile
@@ -237,12 +245,13 @@ const Board = () => {
           onClick={handleClick}
           goStraight={goStraight}
           gameType={gameType}
+          playerPieceColor={playerPieceColor}
         ></Tile>
       );
     }
   }
 
-  return <div id="board">{board}</div>;
+  return <div id="board" style={{backgroundImage: `url(${boardColor})`}}>{board}</div>;
 };
 
 export default Board;

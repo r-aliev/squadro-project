@@ -2,4 +2,5 @@
   display: grid;
   place-content: center;
   height: 100vh;
+  background-image: url("../../assets/images/game_background.png");
 }

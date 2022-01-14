@@ -14,18 +14,18 @@ import white_board_unselected from "../../assets/images/white_board_unselected.p
 import black_board_selected from "../../assets/images/black_board_selected.png";
 import white_board_selected from "../../assets/images/white_board_selected.png";
 
-import yellow_piece_selected from "../../assets/images/yellow_piece_selected.png";
-import yellow_piece_unselected from "../../assets/images/yellow_piece_unselected.png";
+import green_piece_selected from "../../assets/images/yellow_piece_selected.png";
+import green_piece_unselected from "../../assets/images/yellow_piece_unselected.png";
 import red_piece_selected from "../../assets/images/red_piece_selected.png";
 import red_piece_unselected from "../../assets/images/red_piece_unselected.png";
 
 const SingleGameModal = ({ isShown, handleClose }) => {
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [checked, setChecked] = useState(false);
   const [radioValue, setRadioValue] = useState("1");
   const [blackBoard, setBoard] = useState(true);
-  const [redPiece, setPiece] = useState(true);
+  const [greenPiece, setPiece] = useState(true);
 
   const radios = [
     { name: "Easy", value: "1" },
@@ -42,7 +42,7 @@ const SingleGameModal = ({ isShown, handleClose }) => {
   };
 
   const onPieceClick = (e) => {
-    if (redPiece) {
+    if (greenPiece) {
       setPiece(false);
     } else {
       setPiece(true);
@@ -78,7 +78,7 @@ const SingleGameModal = ({ isShown, handleClose }) => {
           <Col>
             <img
               className="choice"
-              src={redPiece ? red_piece_selected : red_piece_unselected}
+              src={greenPiece ? green_piece_selected : green_piece_unselected}
               alt=""
               onClick={onPieceClick}
             ></img>
@@ -86,7 +86,7 @@ const SingleGameModal = ({ isShown, handleClose }) => {
           <Col>
             <img
               className="choice"
-              src={redPiece ? yellow_piece_unselected : yellow_piece_selected}
+              src={greenPiece ? red_piece_unselected : red_piece_selected}
               alt=""
               onClick={onPieceClick}
             ></img>
@@ -119,19 +119,20 @@ const SingleGameModal = ({ isShown, handleClose }) => {
             </Button>
           </Col>
           <Col md="auto" className="p-0">
-            <Button 
-							variant="success"
-							className="mx-4"
-							onClick={() => 
-								navigate("/game", { state: {
-									boardColor: blackBoard ? "black" : "white",
-									pieceColor: redPiece ? "red" : "green",
-									level: radioValue,
-									gameType: "singleGame",
-								}
-								})
-							}
-						>
+            <Button
+              variant="success"
+              className="mx-4"
+              onClick={() =>
+                navigate("/game", {
+                  state: {
+                    boardColor: blackBoard ? "black" : "white",
+                    pieceColor: greenPiece ? "green" : "red",
+                    level: radioValue,
+                    gameType: "singleGame",
+                  },
+                })
+              }
+            >
               Play
             </Button>
           </Col>

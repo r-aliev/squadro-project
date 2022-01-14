@@ -12,7 +12,6 @@ const Header = () => {
     <Navbar
       collapseOnSelect
       expand="lg"
-      bg="light"
       variant="light"
       className="header"
     >

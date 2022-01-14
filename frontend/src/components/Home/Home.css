@@ -1,8 +1,7 @@
 .home {
   height: 100vh !important;
-  background-color: white;
+  background-color: white !important;
 }
-
 
 .squadro-description {
   font-family: Cursive;
@@ -10,16 +9,13 @@
 }
 
 .btn-play {
-  background-color: black !important;
-  color: white;
   padding: 1rem 1.5rem !important;
   font-size: 1.5rem !important;
 }
 
-.choice{
-    cursor: pointer;
+.choice {
+  cursor: pointer;
 }
-
 
 /*
 .Home {
