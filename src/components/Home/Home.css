@@ -23,6 +23,10 @@
     right: 5rem;
 }
 
+#depth-choice{
+    display: flex;
+    justify-content: flex-end;
+}
 /*
 .Home {
     display: flex;

@@ -27,6 +27,8 @@ const Game = () => {
   const [turn, setTurn] = useState(2); // may be better just use js syntax ?
   const location = useLocation();
 
+  // FOR ILLIAS
+  const depth = location.state ? location.state.depth : undefined;
   const gameType = location.state ? location.state.gameType : undefined;
   const boardColor =
     location.state && location.state.boardColor === "black"

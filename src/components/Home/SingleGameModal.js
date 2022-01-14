@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Modal,
   Row,
   Col,
   Button,
   ButtonGroup,
-  ToggleButton,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
@@ -26,12 +25,8 @@ const SingleGameModal = ({ isShown, handleClose }) => {
   const [radioValue, setRadioValue] = useState("1");
   const [blackBoard, setBoard] = useState(true);
   const [greenPiece, setPiece] = useState(true);
-
-  const radios = [
-    { name: "Easy", value: "1" },
-    { name: "Medium", value: "2" },
-    { name: "Hard", value: "3" },
-  ];
+  const [aiLevel, setAiLevel] = useState(1);
+  const [aiDepth, setAiDepth] = useState(5)
 
   const onBoardClick = (e) => {
     if (blackBoard) {
@@ -94,22 +89,39 @@ const SingleGameModal = ({ isShown, handleClose }) => {
         </Row>
         <Row className="my-3">
           <h3>Level:</h3>
-          <ButtonGroup>
-            {radios.map((radio, idx) => (
-              <ToggleButton
-                key={idx}
-                id={`radio-${idx}`}
-                type="radio"
-                variant={idx % 2 ? "outline-success" : "outline-danger"}
-                name="radio"
-                value={radio.value}
-                checked={radioValue === radio.value}
-                onChange={(e) => setRadioValue(e.currentTarget.value)}
-              >
-                {radio.name}
-              </ToggleButton>
-            ))}
+          <ButtonGroup size="md" className="mb-2">
+            <Button
+              variant="outline-success"
+              active={aiLevel === 1}
+              onClick={() => setAiLevel(1)}
+            >
+              Easy
+            </Button>
+            <Button
+              variant="outline-success"
+              active={aiLevel === 2}
+              onClick={() => setAiLevel(2)}
+            >
+              Middle
+            </Button>
+            <Button
+              variant="outline-success"
+              active={aiLevel === 3}
+              onClick={() => setAiLevel(3)}
+            >
+              Hard
+            </Button>
           </ButtonGroup>
+          {aiLevel === 3 && (
+            <div id="depth-choice" width={40}>
+              <h5 className="mx-3">Choose a depth:</h5>
+              <ButtonGroup className="me-2" aria-label="First group">
+                <Button active={aiDepth === 5} variant="outline-danger" onClick={() => setAiDepth(5)}>5</Button>{" "}
+                <Button active={aiDepth === 6} variant="outline-danger" onClick={() => setAiDepth(6)}>6</Button>{" "}
+                <Button active={aiDepth === 7} variant="outline-danger" onClick={() => setAiDepth(7)}>7</Button>
+              </ButtonGroup>
+            </div>
+          )}
         </Row>
 
         <Row className="justify-content-end my-3">
@@ -127,7 +139,8 @@ const SingleGameModal = ({ isShown, handleClose }) => {
                   state: {
                     boardColor: blackBoard ? "black" : "white",
                     pieceColor: greenPiece ? "green" : "red",
-                    level: radioValue,
+                    level: aiLevel,
+                    depth: aiDepth,
                     gameType: "singleGame",
                   },
                 })
