@@ -417,14 +417,14 @@ function minMax(node) {
   if (node.board.turn === true) {
     for (let i = 0; i < 5; i++) {
       if (node.nodes[i] != null) {
-        alphabeta(node.nodes[i]);
+        minMax(node.nodes[i]);
         node.score = Math.max(node.score, node.nodes[i].score);
       }
     }
   } else {
     for (let i = 0; i < 5; i++) {
       if (node.nodes[i] != null) {
-        alphabeta(node.nodes[i]);
+        minMax(node.nodes[i]);
         node.score = Math.min(node.score, node.nodes[i].score);
       }
     }
