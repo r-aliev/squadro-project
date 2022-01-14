@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import { Alert } from "react-alert";
 import "./Board.css";
 import Tile from "../Tile/Tile";
-import { initialBoardState } from "../../Constants";
-import getAIboard from "../../aiAlgo";
-import { useLocation } from "react-router";
-import white_board from "../../assets/images/white_board.png";
-import black_board from "../../assets/images/black_board.png";
 
-const Board = ({pieces, handleClick, gameType, playerPieceColor, boardColor}) => {
+const Board = ({
+  pieces,
+  handleClick,
+  gameType,
+  playerPieceColor,
+  boardColor,
+}) => {
   let board = [];
-  console.log(handleClick)
+  console.log(handleClick);
   const samePosition = (p1, p2) => {
     return p1.x === p2.x && p1.y === p2.y;
   };
@@ -24,7 +25,6 @@ const Board = ({pieces, handleClick, gameType, playerPieceColor, boardColor}) =>
       let color = piece ? piece.color : undefined;
       let goStraight =
         piece && i !== 6 && j !== 6 ? piece.goStraight : undefined;
-
 
       board.push(
         <Tile
@@ -40,7 +40,11 @@ const Board = ({pieces, handleClick, gameType, playerPieceColor, boardColor}) =>
     }
   }
 
-  return <div id="board" style={{backgroundImage: `url(${boardColor})`}}>{board}</div>;
+  return (
+    <div id="board" style={{ backgroundImage: `url(${boardColor})` }}>
+      {board}
+    </div>
+  );
 };
 
 export default Board;

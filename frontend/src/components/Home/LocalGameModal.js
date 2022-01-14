@@ -4,8 +4,6 @@ import {
   Row,
   Col,
   Button,
-  ButtonGroup,
-  ToggleButton,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
@@ -14,9 +12,8 @@ import white_board_unselected from "../../assets/images/white_board_unselected.p
 import black_board_selected from "../../assets/images/black_board_selected.png";
 import white_board_selected from "../../assets/images/white_board_selected.png";
 
-
 const LocalGameModal = ({ isShown, handleClose }) => {
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [blackBoard, setBoard] = useState(true);
 
@@ -31,7 +28,7 @@ const LocalGameModal = ({ isShown, handleClose }) => {
   return (
     <Modal size="lg" show={isShown} onHide={handleClose} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Choose a board! </Modal.Title>
+        <Modal.Title>Choose a board!</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
@@ -61,17 +58,18 @@ const LocalGameModal = ({ isShown, handleClose }) => {
             </Button>
           </Col>
           <Col md="auto" className="p-0">
-            <Button 
-							variant="success"
-							className="mx-4"
-							onClick={() => 
-								navigate("/game", { state: {
-									boardColor: blackBoard ? "black" : "white",
-                  gameType: "localGame",
-                }
-								})
-							}
-						>
+            <Button
+              variant="success"
+              className="mx-4"
+              onClick={() =>
+                navigate("/game", {
+                  state: {
+                    boardColor: blackBoard ? "black" : "white",
+                    gameType: "localGame",
+                  },
+                })
+              }
+            >
               Play
             </Button>
           </Col>
