@@ -1,20 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Game.css";
 import Board from "../Board/Board";
 import TutoModal from "../Home/TutoModal";
 import { Button } from "react-bootstrap";
-import { faQuestionCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faQuestionCircle,
+  faArrowCircleRight,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import squadro_title from "../../assets/images/squadro_title.png";
 import pannelGreen from "../../assets/images/pannel_green.png";
 import pannelRed from "../../assets/images/pannel_red.png";
 import { initialBoardState } from "../../Constants";
 import getAIboard from "../../aiAlgo";
-import { useLocation } from "react-router";
+import { Navigate, useLocation } from "react-router";
 import white_board from "../../assets/images/white_board.png";
 import black_board from "../../assets/images/black_board.png";
 import redPieceVertical from "../../assets/images/red_piece_vertical.png";
 import greenPieceVertical from "../../assets/images/green_piece_vertical.png";
+import { LinkContainer } from "react-router-bootstrap";
 
 const Game = () => {
   const [tutoModal, setTutoModal] = useState(false);
@@ -29,7 +33,7 @@ const Game = () => {
       ? black_board
       : white_board;
 
-  let playerPieceColor = undefined;
+  let playerPieceColor = "green";
   if (gameType === "singleGame") {
     playerPieceColor = location.state.pieceColor;
   }
@@ -53,18 +57,25 @@ const Game = () => {
       }
     }
 
-    if (numberRed === 1) {
+    if (numberRed === 1 && playerPieceColor === "green") {
       alert("Red Won!");
       window.location.reload(); // change in the future
-      // rendering doesn't work for now
-      //setPieces(initialBoardState);
-    } else if (numberYellow === 1) {
+    } else if (numberRed === 1 && playerPieceColor === "red") {
+      alert("Yellow Won!");
+      window.location.reload();
+    } else if (numberYellow === 1 && playerPieceColor === "green") {
       alert("Yellow Won!");
       window.location.reload(); // change in the future
-      // rendering doesn't work for now
-      //setPieces(initialBoardState);
+    } else if (numberYellow === 1 && playerPieceColor === "red") {
+      alert("Red Won!");
+      window.location.reload();
     }
   };
+
+  // component did mount
+  useEffect(() => {
+    setPieces(initialBoardState);
+  }, []);
 
   const handleClick = async (e) => {
     const pieceElement = e.target;
@@ -73,7 +84,6 @@ const Game = () => {
     console.log(element);
     const row = element.dataset.coordinates[0];
     const column = element.dataset.coordinates[1];
-    console.log("row: " + row + " column:" + column);
 
     let newPieces = [];
     let jumpedPieces = [];
@@ -164,7 +174,6 @@ const Game = () => {
         if (isRedPiece) {
           console.log("in isRedPiece");
           for (let i = p.position.x + 1; i < nextMainAxisPosition; i++) {
-            console.log("in for loop");
             jumpedPiece = pieces.find((jpx) =>
               samePosition(jpx.position, { x: i, y: p.position.y })
             );
@@ -243,30 +252,29 @@ const Game = () => {
     }
   }
 
-  let leftPiece = redPieceVertical
-  let rightPiece = greenPieceVertical
-  let pannelLeft = pannelRed
-  let pannelRight = pannelGreen
-  if(gameType==="singleGame" && playerPieceColor === "red"){
+  let leftPiece = redPieceVertical;
+  let rightPiece = greenPieceVertical;
+  let pannelLeft = pannelRed;
+  let pannelRight = pannelGreen;
+  if (gameType === "singleGame" && playerPieceColor === "red") {
     leftPiece = greenPieceVertical;
     rightPiece = redPieceVertical;
-    pannelLeft = pannelGreen
-    pannelRight = pannelRed
+    pannelLeft = pannelGreen;
+    pannelRight = pannelRed;
   }
   let leftPieces = [];
   for (let i = 0; i < nbLeftPieces; i++) {
     leftPieces.push(
-        <img key={i} className="piecesImage" src={leftPiece} width={40}></img>
+      <img key={i} className="piecesImage" src={leftPiece} width={40}></img>
     );
   }
   let rightPieces = [];
   for (let i = 0; i < nbRighPieces; i++) {
     rightPieces.push(
-        <img key={i} className="piecesImage" src={rightPiece} width={40}></img>
+      <img key={i} className="piecesImage" src={rightPiece} width={40}></img>
     );
   }
 
-  //pieces, handleClick, gameType, playerPieceColor, boardColor
   return (
     <div id="app">
       <div id="title">
@@ -275,7 +283,6 @@ const Game = () => {
       <div id="leftPanel" style={{ backgroundImage: `url(${pannelLeft})` }}>
         <div className="piecesPannel">{leftPieces}</div>
       </div>
-
       <Board
         pieces={pieces}
         handleClick={handleClick}
@@ -286,7 +293,11 @@ const Game = () => {
       <div id="rightPanel" style={{ backgroundImage: `url(${pannelRight})` }}>
         <div className="piecesPannel">{rightPieces}</div>
       </div>
-
+      <LinkContainer exact={true} to="/">
+        <Button id="btn-back-home" variant="dark">
+          <FontAwesomeIcon icon={faArrowCircleRight} /> Back To Home
+        </Button>
+      </LinkContainer>
       <Button id="btn-tuto" variant="dark" onClick={() => setTutoModal(true)}>
         <FontAwesomeIcon icon={faQuestionCircle} /> TUTO
       </Button>

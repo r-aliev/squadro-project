@@ -10,7 +10,6 @@ export const initialBoardState = [
     goStraight: true,
   },
   {
-    
     color: 2,
     position: {
       x: 2,
@@ -21,7 +20,6 @@ export const initialBoardState = [
     goStraight: true,
   },
   {
-    
     color: 2,
     position: {
       x: 3,
@@ -42,7 +40,6 @@ export const initialBoardState = [
     goStraight: true,
   },
   {
-    
     color: 2,
     position: {
       x: 5,
@@ -56,7 +53,7 @@ export const initialBoardState = [
     color: 1,
     position: {
       x: 0,
-      y: 1, 
+      y: 1,
     },
     step: 1,
     stepOpposite: -3,
@@ -66,23 +63,23 @@ export const initialBoardState = [
     color: 1,
     position: {
       x: 0,
-      y: 2, 
+      y: 2,
     },
     step: 3,
     stepOpposite: -1,
     goStraight: true,
   },
-  { 
+  {
     color: 1,
     position: {
       x: 0,
-      y: 3, 
+      y: 3,
     },
     step: 2,
     stepOpposite: -2,
     goStraight: true,
   },
-  { 
+  {
     color: 1,
     position: {
       x: 0,
@@ -92,7 +89,7 @@ export const initialBoardState = [
     stepOpposite: -1,
     goStraight: true,
   },
-  { 
+  {
     color: 1,
     position: {
       x: 0,
@@ -102,5 +99,4 @@ export const initialBoardState = [
     stepOpposite: -3,
     goStraight: true,
   },
-  
 ];

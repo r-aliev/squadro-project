@@ -57,3 +57,18 @@
   justify-content: flex-start;
   align-items: center;
 }
+
+
+#btn-back-home{
+  position:absolute;
+  top: 5rem;
+  right: 5rem;
+}
+
+
+#actual-arrow{
+  grid-row: 3 / 4;
+  grid-column: 2 / 4;
+  align-self: center;
+  justify-self: center;
+}
