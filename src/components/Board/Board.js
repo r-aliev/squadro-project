@@ -19,14 +19,15 @@ const Board = ({
   const arrowRef = useRef(null);
 
   useEffect(() => {    
-    // Update the document title using the browser API 
     if(arrowColor === "green"){
       arrowRef.current.src = arrowGreen
     }else{
       arrowRef.current.src= arrowRed
     }
     arrowColor === "green" ? setArrowColor("red") : setArrowColor("green")
+    
   },[pieces])
+
 
   const samePosition = (p1, p2) => {
     return p1.x === p2.x && p1.y === p2.y;

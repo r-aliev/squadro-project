@@ -24,6 +24,10 @@ const Game = () => {
   const [tutoModal, setTutoModal] = useState(false);
 
   const [pieces, setPieces] = useState(initialBoardState);
+  useEffect(() => {
+    setPieces(pieces);
+  }, [pieces]);
+
   const [turn, setTurn] = useState(2); // may be better just use js syntax ?
   const location = useLocation();
 
@@ -61,23 +65,19 @@ const Game = () => {
 
     if (numberRed === 1 && playerPieceColor === "green") {
       alert("Red Won!");
-      window.location.reload(); // change in the future
+      window.location.reload();
     } else if (numberRed === 1 && playerPieceColor === "red") {
       alert("Yellow Won!");
       window.location.reload();
     } else if (numberYellow === 1 && playerPieceColor === "green") {
       alert("Yellow Won!");
-      window.location.reload(); // change in the future
+      window.location.reload(); 
     } else if (numberYellow === 1 && playerPieceColor === "red") {
       alert("Red Won!");
       window.location.reload();
     }
   };
-
-  // component did mount
-  useEffect(() => {
-    setPieces(initialBoardState);
-  }, []);
+  
 
   const handleClick = async (e) => {
     const pieceElement = e.target;
