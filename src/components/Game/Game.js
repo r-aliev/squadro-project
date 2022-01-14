@@ -28,7 +28,7 @@ const Game = () => {
   const location = useLocation();
 
   // FOR ILLIAS
-  const depth = location.state ? location.state.depth : undefined;
+  const depth = location.state ? location.state.depth : 5;
   const gameType = location.state ? location.state.gameType : undefined;
   const boardColor =
     location.state && location.state.boardColor === "black"
@@ -236,7 +236,7 @@ const Game = () => {
 
       if (location.state && location.state.gameType === "singleGame") {
         await sleep(2000);
-        let aiPieces = getAIboard(pieces, parseInt(location.state.level));
+        let aiPieces = getAIboard(pieces, parseInt(location.state.level), depth);
         setPieces(aiPieces);
         checkForWinner(aiPieces);
         setTurn(2); // to allow yellows to move again

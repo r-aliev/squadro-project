@@ -517,6 +517,11 @@ function analysePlateauLevel1(node) {
   node.score = Math.floor(Math.random() * 80) + -40;
 }
 
+/**
+ * toString
+ * @param {Board} board
+ */
+
 function toString(board) {
   let s = "";
   let k;
@@ -545,6 +550,12 @@ function toString(board) {
   console.log(s);
 }
 
+/**
+ * call AI to make it's move
+ * @param {Node} node
+ * @param {Number} level
+ */
+
 function aiMove(node, level) {
   generateTree(node);
   evaluationScore(node, level);
@@ -553,6 +564,11 @@ function aiMove(node, level) {
   newBoard = getNewBoard(node);
   return newBoard;
 }
+
+/**
+ * Mapping board from backend to frontend
+ * @param {Board} board
+ */
 
 function transformBackToFront(board) {
   const pieces = board.plateau.pieces;
@@ -617,14 +633,21 @@ function transformBackToFront(board) {
   return frontPieces;
 }
 
-const getAIboard = (frontPieces, level) => {
+/**
+ * Mapping board data from frontend to backend
+ * @param {Array<>} node
+ * @param {Number} level
+ * @param {Number} depth
+ */
+
+const getAIboard = (frontPieces, level, depth) => {
   let playerPieces = [];
   let computerPieces = [];
   let pieces = [];
   frontPieces.forEach((fp) => {
     let color = fp.color === 1 || fp.color === 3 ? "RED" : "YELLOW";
 
-    let move = fp.goStraight ? fp.step : Math.abs(fp.stepOpposite); // ?? fp.stepOpposite consider?
+    let move = fp.goStraight ? fp.step : Math.abs(fp.stepOpposite); 
     let x = 6 - fp.position.y;
     let y = fp.position.x;
     let sens = fp.goStraight ? 1 : -1;
@@ -654,7 +677,7 @@ const getAIboard = (frontPieces, level) => {
   let node;
 
   if (level === 3) {
-    node = new Node(0, 5, board, null);
+    node = new Node(0, depth, board, null);
   } else {
     node = new Node(0, 1, board, null);
   }
