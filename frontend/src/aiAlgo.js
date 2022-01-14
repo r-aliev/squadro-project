@@ -86,6 +86,8 @@ class Plateau {
 const maxScore = 200000;
 const minScore = -1 * 200000;
 
+
+// function used to clone elements
 function clone(obj) {
   return JSON.parse(JSON.stringify(obj));
 }
@@ -93,8 +95,10 @@ function clone(obj) {
 function gamenode() {}
 
 /**
+ * create all the child nodes
  * @param {Node} node
  */
+
 
 function possibleNodes(node) {
   if (winner(node.board) !== null) return null;
@@ -125,7 +129,7 @@ function generateTree(node) {
     let pp = possibleNodes(node);
     node.nodes = [];
     for (let i = 0; i < 5; i++) {
-      if (pp[i] != null) {
+      if (pp!=null && pp[i] != null) {
         node.nodes[i] = new Node();
         node.nodes[i] = pp[i];
         node.nodes[i].board.turn = !node.board.turn;
