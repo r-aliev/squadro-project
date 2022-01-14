@@ -6,7 +6,7 @@ import { faSignInAlt, faSignOutAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import squadro_title from "../../assets/images/squadro_title.png"
 
-import logo from "../../assets/images/logo.jpg";
+import logo from "../../assets/images/logo.png";
 
 const Header = () => {
   return (
@@ -17,40 +17,13 @@ const Header = () => {
       className="header"
     >
       <LinkContainer exact={true} to="/">
-        <Navbar.Brand className="col-3 mr-0 my-4" href="#home">
+        <Navbar.Brand className="col-3 my-4 mr-5 p-5" href="/">
           <img src={logo} height={100} alt="Logo of DigiTop"></img>
         </Navbar.Brand>
       </LinkContainer>
-      
-        <Navbar.Brand className="col-7">
+        <Navbar.Brand className="col-9">
           <img src={squadro_title} width={700} alt="title"></img>
-        </Navbar.Brand>
-        <Navbar.Toggle className="mr-3 position-absolute d-md-none" />
-        <LinkContainer exact={true} to="/sign-in">
-          <Nav.Link href="#" className="ml-auto mr-3 d-none d-md-block">
-            SignIn
-            <span className="ml-2">
-              <FontAwesomeIcon icon={faSignInAlt} />
-            </span>
-          </Nav.Link>
-        </LinkContainer>
-        {/*
-        <NavDropdown
-          // 	title={user.firstname + " " + user.lastname}
-          id="collasible-nav-dropdown"
-          className="ml-auto mr-3 d-none d-md-block"
-        >
-          <NavDropdown.Item className="pt-0 pb-0">
-            <div className="pt-0 pb-0 p-0">
-              Exit
-              <span className="ml-2">
-                <FontAwesomeIcon icon={faSignOutAlt} />
-              </span>
-            </div>
-          </NavDropdown.Item>
-        </NavDropdown>
-         */}
-     
+        </Navbar.Brand>     
     </Navbar>
   );
 };
