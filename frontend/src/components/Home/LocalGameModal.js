@@ -31,7 +31,7 @@ const LocalGameModal = ({ isShown, handleClose }) => {
   return (
     <Modal size="lg" show={isShown} onHide={handleClose} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Choose a board and a piece color! </Modal.Title>
+        <Modal.Title>Choose a board! </Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
