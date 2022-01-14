@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Alert } from "react-alert";
 import "./Board.css";
 import Tile from "../Tile/Tile";
+import arrowRed from "../../assets/images/red_arrow.png"
+import arrowGreen from "../../assets/images/green_arrow.png"
+
 
 const Board = ({
   pieces,
@@ -11,7 +14,20 @@ const Board = ({
   boardColor,
 }) => {
   let board = [];
-  console.log(handleClick);
+  const [arrowColor, setArrowColor] = useState(playerPieceColor);
+
+  const arrowRef = useRef(null);
+
+  useEffect(() => {    
+    // Update the document title using the browser API 
+    if(arrowColor === "green"){
+      arrowRef.current.src = arrowGreen
+    }else{
+      arrowRef.current.src= arrowRed
+    }
+    arrowColor === "green" ? setArrowColor("red") : setArrowColor("green")
+  },[pieces])
+
   const samePosition = (p1, p2) => {
     return p1.x === p2.x && p1.y === p2.y;
   };
@@ -41,9 +57,14 @@ const Board = ({
   }
 
   return (
+  <>
     <div id="board" style={{ backgroundImage: `url(${boardColor})` }}>
       {board}
     </div>
+    <div id="player-cursor">
+        <img ref={arrowRef} src={arrowGreen} alt=""/>
+    </div>
+  </>
   );
 };
 

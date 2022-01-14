@@ -11,11 +11,10 @@
   git clone https://github.com/r-aliev/squadro-project.git
   
   ## For front end
+  cd squadro-project
   npm install
-  cd squadro-project/frontend
   npm start
   
-
 
   ```
     Check 127.0.0.1:3000 on your browser
