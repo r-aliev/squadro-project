@@ -1,0 +1,158 @@
+.home {
+  height: 100vh !important;
+  background-color: white !important;
+}
+
+.squadro-description {
+  font-family: Cursive;
+  font-size: large;
+}
+
+.btn-play {
+  padding: 1rem 1.5rem !important;
+  font-size: 1.5rem !important;
+}
+
+.choice {
+  cursor: pointer;
+}
+
+#btn-tuto{
+    position:absolute;
+    bottom: 5rem;
+    right: 5rem;
+}
+
+#depth-choice{
+    display: flex;
+    justify-content: flex-end;
+}
+/*
+.Home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#gameExplanation {
+    display: block;
+    align-self: center;
+    width: 60%;
+    text-align: center;
+    font-size: 24px;
+    margin-top: 5%;
+    padding-left: 15%;
+    padding-right: 15%;
+    color : #3E3E3E;
+}
+
+#pseudoInput {
+    height: 30px;
+    width: auto;
+    margin-left: 10px;
+    background-color: rgb(189, 189, 189);
+    border: none;
+    padding: 0 10px 0 10px;
+}
+
+.formDiv {
+    display: flex;
+}
+
+#pseudoArea{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.difficulty {
+    margin-top: 20px;
+    width: 300px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.customForm {
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    align-self: center;
+    margin-top: 5%;
+}
+
+.mainContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-self: center;
+}
+
+.customForm h2 {
+    color: #9E4385;
+}
+
+.pinkLabel {
+    color: #FB5BCE;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+#playBtn {
+    display: flex;
+    justify-self: center;
+}
+
+.leftPack {
+    text-align: center;
+    width: 33%;
+}
+
+.midPack {
+    display: flex;
+    flex-direction: column;
+    width: 33%;
+    align-items: center;
+    align-self: center;
+}
+
+.rightPack {
+    text-align: center;
+    width: 33%;
+}
+
+#pieceContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 15%;
+}
+
+#hardBtn {
+    background-color: #b9b9b9;
+    color: #6d6d6d;
+}
+
+.buttonStandard {
+    border: none;
+    border-radius: 5% 5% 5% 5%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3);
+    color: #FB5BCE;
+    font-size: 25px;
+    font-weight: 500;
+}
+
+#whiteBoard {
+    padding-left: 20px;
+}
+
+#playBtn {
+    margin-top: 5%;
+    font-size: 30px;
+    font-weight: 700;
+}
+*/

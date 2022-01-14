@@ -2,7 +2,7 @@
 
 ### Installation
   
-    Assume that you have docker, docker-compose up and npm installed.
+    Assume sure you have a version v16.4.1 of Node.js installed.
 
     In order to run the application in local environment follow instructions below:
 
@@ -13,14 +13,10 @@
   ## For front end
   npm install
   cd squadro-project/frontend
-  docker-compose up --build
+  npm start
   
-  ## For back end
-  cd squadro-project/backend
-  docker-compose up --build
+
 
   ```
+    Check 127.0.0.1:3000 on your browser
 
-    Check 127.0.0.1:3000 for frontend.
-    Check 127.0.0.1:8000/api/ for api.
-  
