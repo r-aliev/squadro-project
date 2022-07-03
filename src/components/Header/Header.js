@@ -8,15 +8,17 @@ import logo from "../../assets/images/logo.png";
 
 const Header = () => {
   return (
-    <Navbar collapseOnSelect expand="lg" variant="light" className="header">
-      <LinkContainer exact={true} to="/">
-        <Navbar.Brand className="col-3 my-4 mr-5 p-5" href="/">
-          <img src={logo} height={100} alt="Logo of DigiTop"></img>
+    <Navbar expand="lg" variant="light" className="header">
+      <Container>
+        <LinkContainer className="col-3" exact={true} to="/">
+          <Navbar.Brand className="d-none d-lg-block my-4 mr-5 p-5" href="/">
+            <img src={logo} height={100} alt="Logo of DigiTop"></img>
+          </Navbar.Brand>
+        </LinkContainer>
+        <Navbar.Brand className="col-9">
+          <img src={squadro_title} width={550} alt="title"></img>
         </Navbar.Brand>
-      </LinkContainer>
-      <Navbar.Brand className="col-9">
-        <img src={squadro_title} width={700} alt="title"></img>
-      </Navbar.Brand>
+      </Container>
     </Navbar>
   );
 };

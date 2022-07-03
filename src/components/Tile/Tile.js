@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./Tile.css";
+
 import greenPieceVertical from "../../assets/images/green_piece_vertical.png";
 import greenPieceHorizontal from "../../assets/images/green_piece_horizontal.png";
 import greenPieceHorizontalReverse from "../../assets/images/green_piece_horizontal_reverse.png";
@@ -10,7 +11,6 @@ import redPieceHorizontal from "../../assets/images/red_piece_horizontal.png";
 import redPieceHorizontalReverse from "../../assets/images/red_piece_horizontal_reverse.png";
 import redPieceVertical from "../../assets/images/red_piece_vertical.png";
 import redPieceVerticalReverse from "../../assets/images/red_piece_vertical_reverse.png";
-
 
 const Tile = ({
   color,
@@ -22,15 +22,21 @@ const Tile = ({
 }) => {
   let pieceImage = null;
 
-  // change in the future names of variables, we gonna consider that green pieces are always pieces on horizontal axes and red pieces are always on vertical axes
-
   // to vertical piece -> horizontal piece
-  const verticalPiece = playerPieceColor === "green" ? redPieceHorizontal : greenPieceHorizontal;
-  const verticalPieceReverse = playerPieceColor === "green" ? redPieceHorizontalReverse : greenPieceHorizontalReverse;
+  const verticalPiece =
+    playerPieceColor === "green" ? redPieceHorizontal : greenPieceHorizontal;
+  const verticalPieceReverse =
+    playerPieceColor === "green"
+      ? redPieceHorizontalReverse
+      : greenPieceHorizontalReverse;
 
   // player is always on horizontalAxis
-  const horizontalPiece = playerPieceColor === "green" ? greenPieceVertical : redPieceVertical; // player piece in sigle game mode
-  const horizontalPieceReverse = playerPieceColor === "green" ? greenPieceVerticalReverse : redPieceVerticalReverse;
+  const horizontalPiece =
+    playerPieceColor === "green" ? greenPieceVertical : redPieceVertical; // player piece in sigle game mode
+  const horizontalPieceReverse =
+    playerPieceColor === "green"
+      ? greenPieceVerticalReverse
+      : redPieceVerticalReverse;
 
   // 1 and 3 - red
   if (color === 1 || color === 3) {

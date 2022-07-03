@@ -647,7 +647,7 @@ const getAIboard = (frontPieces, level, depth) => {
   frontPieces.forEach((fp) => {
     let color = fp.color === 1 || fp.color === 3 ? "RED" : "YELLOW";
 
-    let move = fp.goStraight ? fp.step : Math.abs(fp.stepOpposite); 
+    let move = fp.goStraight ? fp.step : Math.abs(fp.stepOpposite);
     let x = 6 - fp.position.y;
     let y = fp.position.x;
     let sens = fp.goStraight ? 1 : -1;

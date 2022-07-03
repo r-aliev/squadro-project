@@ -2,9 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Alert } from "react-alert";
 import "./Board.css";
 import Tile from "../Tile/Tile";
-import arrowRed from "../../assets/images/red_arrow.png"
-import arrowGreen from "../../assets/images/green_arrow.png"
-
+import arrowRed from "../../assets/images/red_arrow.png";
+import arrowGreen from "../../assets/images/green_arrow.png";
 
 const Board = ({
   pieces,
@@ -15,19 +14,16 @@ const Board = ({
 }) => {
   let board = [];
   const [arrowColor, setArrowColor] = useState(playerPieceColor);
-
   const arrowRef = useRef(null);
 
-  useEffect(() => {    
-    if(arrowColor === "green"){
-      arrowRef.current.src = arrowGreen
-    }else{
-      arrowRef.current.src= arrowRed
+  useEffect(() => {
+    if (arrowColor === "green") {
+      arrowRef.current.src = arrowGreen;
+    } else {
+      arrowRef.current.src = arrowRed;
     }
-    arrowColor === "green" ? setArrowColor("red") : setArrowColor("green")
-    
-  },[pieces])
-
+    arrowColor === "green" ? setArrowColor("red") : setArrowColor("green");
+  }, [pieces]);
 
   const samePosition = (p1, p2) => {
     return p1.x === p2.x && p1.y === p2.y;
@@ -58,14 +54,14 @@ const Board = ({
   }
 
   return (
-  <>
-    <div id="board" style={{ backgroundImage: `url(${boardColor})` }}>
-      {board}
-    </div>
-    <div id="player-cursor">
-        <img ref={arrowRef} src={arrowGreen} alt=""/>
-    </div>
-  </>
+    <>
+      <div id="board" style={{ backgroundImage: `url(${boardColor})` }}>
+        {board}
+      </div>
+      <div id="player-cursor">
+        <img ref={arrowRef} src={arrowGreen} alt="" />
+      </div>
+    </>
   );
 };
 

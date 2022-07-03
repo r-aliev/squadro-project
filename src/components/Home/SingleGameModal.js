@@ -20,9 +20,7 @@ import red_piece_unselected from "../../assets/images/red_piece_unselected.png";
 
 const SingleGameModal = ({ isShown, handleClose }) => {
   const navigate = useNavigate();
-
-  const [checked, setChecked] = useState(false);
-  const [radioValue, setRadioValue] = useState("1");
+  
   const [blackBoard, setBoard] = useState(true);
   const [greenPiece, setPiece] = useState(true);
   const [aiLevel, setAiLevel] = useState(1);

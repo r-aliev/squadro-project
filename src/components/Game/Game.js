@@ -13,7 +13,7 @@ import pannelGreen from "../../assets/images/pannel_green.png";
 import pannelRed from "../../assets/images/pannel_red.png";
 import { initialBoardState } from "../../Constants";
 import getAIboard from "../../aiAlgo";
-import { Navigate, useLocation } from "react-router";
+import { useLocation } from "react-router";
 import white_board from "../../assets/images/white_board.png";
 import black_board from "../../assets/images/black_board.png";
 import redPieceVertical from "../../assets/images/red_piece_vertical.png";
@@ -24,14 +24,13 @@ const Game = () => {
   const [tutoModal, setTutoModal] = useState(false);
 
   const [pieces, setPieces] = useState(initialBoardState);
+  const [turn, setTurn] = useState(2);
+  const location = useLocation();
+
   useEffect(() => {
     setPieces(pieces);
   }, [pieces]);
-
-  const [turn, setTurn] = useState(2); // may be better just use js syntax ?
-  const location = useLocation();
-
-  // FOR ILLIAS
+  
   const depth = location.state ? location.state.depth : 5;
   const gameType = location.state ? location.state.gameType : undefined;
   const boardColor =
@@ -71,13 +70,12 @@ const Game = () => {
       window.location.reload();
     } else if (numberYellow === 1 && playerPieceColor === "green") {
       alert("Yellow Won!");
-      window.location.reload(); 
+      window.location.reload();
     } else if (numberYellow === 1 && playerPieceColor === "red") {
       alert("Red Won!");
       window.location.reload();
     }
   };
-  
 
   const handleClick = async (e) => {
     const pieceElement = e.target;
@@ -104,7 +102,7 @@ const Game = () => {
           turn === 1 ? setTurn(2) : setTurn(1);
         } else {
           // if play with ai
-          turn === 2 && setTurn(-1); //cuz no color -1 (but there are colors: 1, 2, 3, 4)
+          turn === 2 && setTurn(-1); //cuz there is no color -1 (but there are colors: 1, 2, 3, 4)
         }
         const isRedPiece = pieceElement.classList.contains("redPiece");
         const mainAxisPosition = isRedPiece ? p.position.x : p.position.y;
@@ -174,7 +172,6 @@ const Game = () => {
 
         let jumpedPiece = null;
         if (isRedPiece) {
-          console.log("in isRedPiece");
           for (let i = p.position.x + 1; i < nextMainAxisPosition; i++) {
             jumpedPiece = pieces.find((jpx) =>
               samePosition(jpx.position, { x: i, y: p.position.y })
@@ -236,10 +233,15 @@ const Game = () => {
 
       if (location.state && location.state.gameType === "singleGame") {
         await sleep(2000);
-        let aiPieces = getAIboard(pieces, parseInt(location.state.level), depth);
+        let aiPieces = getAIboard(
+          pieces,
+          parseInt(location.state.level),
+          depth
+        );
         setPieces(aiPieces);
         checkForWinner(aiPieces);
-        setTurn(2); // to allow yellows to move again
+        // to allow yellows to move again
+        setTurn(2);
       }
     }
   };
