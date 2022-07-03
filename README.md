@@ -1,4 +1,15 @@
 # Squadro Project
+This project is a web version of Squadro board game developed using __React.js__ by a team of 4 students during "Tutored Project" course in Sorbonne University.
+
+Game is available in 2 modes: Local Game (local co-op) and Single Game (game with AI). 
+### AI
+AI is implemented using __The Minimax Algorithm__. It allows users to choose the level of difficulty (Easy, Medium, Hard). It is possible to choose a __depth__ of the algorithm for 'Hard' level.
+
+### Demo
+
+   Quick web app demo using 'Single Game' mode.
+  
+   ![Web app demo](demo-gif/squadro.gif)
 
 ### Installation
   
