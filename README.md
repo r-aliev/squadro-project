@@ -6,7 +6,8 @@ Game is available in 2 modes: Local Game (local co-op) and Single Game (game wit
 AI is implemented using __The Minimax Algorithm__. It allows users to choose the level of difficulty (Easy, Medium, Hard). It is possible to choose a __depth__ of the algorithm for 'Hard' level.
 
 ### Demo
-
+   Go and play live on https://squadro-game.herokuapp.com/ !
+   
    Quick web app demo using 'Single Game' mode.
   
    ![Web app demo](demo-gif/squadro.gif)
