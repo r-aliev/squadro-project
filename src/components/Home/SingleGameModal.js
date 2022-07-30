@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import {
   Modal,
   Row,
@@ -40,6 +40,10 @@ const SingleGameModal = ({ isShown, handleClose }) => {
     } else {
       setPiece(true);
     }
+  };
+
+  const sleep = (milliseconds) => {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
   };
 
   return (
@@ -132,7 +136,7 @@ const SingleGameModal = ({ isShown, handleClose }) => {
             <Button
               variant="success"
               className="mx-4"
-              onClick={() =>
+              onClick={() => {
                 navigate("/game", {
                   state: {
                     boardColor: blackBoard ? "black" : "white",
@@ -142,7 +146,9 @@ const SingleGameModal = ({ isShown, handleClose }) => {
                     gameType: "singleGame",
                   },
                 })
-              }
+                sleep(1000);
+                window.location.reload()
+              }}
             >
               Play
             </Button>

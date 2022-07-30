@@ -13,17 +13,17 @@ import pannelGreen from "../../assets/images/pannel_green.png";
 import pannelRed from "../../assets/images/pannel_red.png";
 import { initialBoardState } from "../../Constants";
 import getAIboard from "../../aiAlgo";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import white_board from "../../assets/images/white_board.png";
 import black_board from "../../assets/images/black_board.png";
 import redPieceVertical from "../../assets/images/red_piece_vertical.png";
 import greenPieceVertical from "../../assets/images/green_piece_vertical.png";
-import { LinkContainer } from "react-router-bootstrap";
 
 const Game = () => {
+  const navigate = useNavigate()
   const [tutoModal, setTutoModal] = useState(false);
 
-  const [pieces, setPieces] = useState(initialBoardState);
+  const [pieces, setPieces] = useState([...initialBoardState]);
   const [turn, setTurn] = useState(2);
   const location = useLocation();
 
@@ -297,11 +297,9 @@ const Game = () => {
       <div id="rightPanel" style={{ backgroundImage: `url(${pannelRight})` }}>
         <div className="piecesPannel">{rightPieces}</div>
       </div>
-      <LinkContainer exact={true} to="/">
-        <Button id="btn-back-home" variant="dark">
-          <FontAwesomeIcon icon={faArrowCircleRight} /> Back To Home
-        </Button>
-      </LinkContainer>
+      <Button id="btn-back-home" variant="dark" onClick={() => navigate('/')} >
+        <FontAwesomeIcon icon={faArrowCircleRight} /> Back to Home
+      </Button>
       <Button id="btn-tuto" variant="dark" onClick={() => setTutoModal(true)}>
         <FontAwesomeIcon icon={faQuestionCircle} /> TUTO
       </Button>

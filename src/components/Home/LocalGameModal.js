@@ -15,6 +15,10 @@ import white_board_selected from "../../assets/images/white_board_selected.png";
 const LocalGameModal = ({ isShown, handleClose }) => {
   const navigate = useNavigate();
 
+  const sleep = (milliseconds) => {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  };
+
   const [blackBoard, setBoard] = useState(true);
 
   const onBoardClick = (e) => {
@@ -61,14 +65,16 @@ const LocalGameModal = ({ isShown, handleClose }) => {
             <Button
               variant="success"
               className="mx-4"
-              onClick={() =>
+              onClick={() => {
                 navigate("/game", {
                   state: {
                     boardColor: blackBoard ? "black" : "white",
                     gameType: "localGame",
                   },
                 })
-              }
+                sleep(1000);
+                window.location.reload()
+              }}
             >
               Play
             </Button>
