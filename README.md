@@ -12,7 +12,7 @@ AI is implemented using __The Minimax Algorithm__. It allows users to choose the
   
    ![Web app demo](demo-gif/squadro.gif)
 
-### Installation
+### Installation for local testing
   
     Assume sure you have a version v16.4.1 of Node.js installed.
 
